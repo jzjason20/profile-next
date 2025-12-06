@@ -24,7 +24,8 @@ import * as THREE from "three";
 extend({ MeshLineGeometry, MeshLineMaterial });
 
 const CARD_GLB_PATH = "/cme.glb";
-const LANYARD_TEXTURE_PATH = "/lanyard.png";
+const CARD_TEXTURE_PATH = "/logo-card.png";
+const STRAP_TEXTURE_PATH = "/lanyard.png";
 
 interface LanyardProps {
   position?: [number, number, number];
@@ -134,7 +135,8 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   };
 
   const { nodes, materials } = useGLTF(CARD_GLB_PATH) as any;
-  const texture = useTexture(LANYARD_TEXTURE_PATH);
+  const strapTexture = useTexture(STRAP_TEXTURE_PATH);
+  const cardTexture = useTexture(CARD_TEXTURE_PATH);
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -203,7 +205,10 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   });
 
   curve.curveType = "chordal";
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  strapTexture.wrapS = strapTexture.wrapT = THREE.RepeatWrapping;
+  cardTexture.flipY = false;
+  cardTexture.colorSpace = THREE.SRGBColorSpace;
+  cardTexture.anisotropy = 16;
 
   return (
     <>
@@ -268,7 +273,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
           >
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
-                map={materials.base.map}
+                map={cardTexture}
                 map-anisotropy={16}
                 clearcoat={isMobile ? 0 : 1}
                 clearcoatRoughness={0.15}
@@ -292,7 +297,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
           depthTest={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
           useMap
-          map={texture}
+          map={strapTexture}
           repeat={[-4, 1]}
           lineWidth={1}
         />
