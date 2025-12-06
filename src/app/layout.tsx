@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: "Jacy — Personal Playground",
   description:
     "Creative developer portfolio with particles, experiments, and timeline",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
