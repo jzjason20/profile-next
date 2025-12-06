@@ -1,3 +1,4 @@
+import DotGrid from "@/components/DotGrid";
 import SpotlightCard from "@/components/SpotlightCard";
 import { aboutContent } from "@/data/content";
 
@@ -17,8 +18,19 @@ const codeLines = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="bg-black px-6 py-24 text-white">
-      <div className="mx-auto max-w-6xl space-y-12">
+    <section
+      id="about"
+      className="relative overflow-hidden bg-black px-6 py-24 text-white"
+    >
+      <DotGrid
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        gap={32}
+        dotSize={6}
+        baseColor="#1a1a1a"
+        activeColor="#fafafa"
+        proximity={160}
+      />
+      <div className="relative z-10 mx-auto max-w-6xl space-y-12">
         <div className="space-y-4 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-white/50">
             About

@@ -394,6 +394,7 @@ const GlobalSpotlight: React.FC<{
 }) => {
   const spotlightRef = useRef<HTMLDivElement | null>(null);
   const isInsideSection = useRef(false);
+  const lastMouseEvent = useRef<MouseEvent | null>(null);
 
   useEffect(() => {
     if (disableAnimations || !gridRef?.current || !enabled) return;
@@ -422,33 +423,52 @@ const GlobalSpotlight: React.FC<{
     document.body.appendChild(spotlight);
     spotlightRef.current = spotlight;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const clearCardGlow = () => {
+      gridRef.current?.querySelectorAll(".card").forEach((card) => {
+        (card as HTMLElement).style.setProperty("--glow-intensity", "0");
+      });
+    };
+
+    const fadeOutSpotlight = () => {
+      if (!spotlightRef.current) return;
+      gsap.to(spotlightRef.current, {
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    };
+
+    const resetSpotlightState = () => {
+      isInsideSection.current = false;
+      clearCardGlow();
+      fadeOutSpotlight();
+    };
+
+    const processMousePosition = (event: MouseEvent | null) => {
       if (!spotlightRef.current || !gridRef.current) return;
+
+      if (!event) {
+        resetSpotlightState();
+        return;
+      }
 
       const section = gridRef.current.closest(".bento-section");
       const rect = section?.getBoundingClientRect();
       const mouseInside =
         rect &&
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
-
-      isInsideSection.current = mouseInside || false;
-      const cards = gridRef.current.querySelectorAll(".card");
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
 
       if (!mouseInside) {
-        gsap.to(spotlightRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        cards.forEach((card) => {
-          (card as HTMLElement).style.setProperty("--glow-intensity", "0");
-        });
+        resetSpotlightState();
         return;
       }
 
+      isInsideSection.current = true;
+
+      const cards = gridRef.current.querySelectorAll(".card");
       const { proximity, fadeDistance } =
         calculateSpotlightValues(spotlightRadius);
       let minDistance = Infinity;
@@ -459,7 +479,7 @@ const GlobalSpotlight: React.FC<{
         const centerX = cardRect.left + cardRect.width / 2;
         const centerY = cardRect.top + cardRect.height / 2;
         const distance =
-          Math.hypot(e.clientX - centerX, e.clientY - centerY) -
+          Math.hypot(event.clientX - centerX, event.clientY - centerY) -
           Math.max(cardRect.width, cardRect.height) / 2;
         const effectiveDistance = Math.max(0, distance);
 
@@ -475,16 +495,16 @@ const GlobalSpotlight: React.FC<{
 
         updateCardGlowProperties(
           cardElement,
-          e.clientX,
-          e.clientY,
+          event.clientX,
+          event.clientY,
           glowIntensity,
           spotlightRadius
         );
       });
 
       gsap.to(spotlightRef.current, {
-        left: e.clientX,
-        top: e.clientY,
+        left: event.clientX,
+        top: event.clientY,
         duration: 0.1,
         ease: "power2.out",
       });
@@ -503,26 +523,36 @@ const GlobalSpotlight: React.FC<{
       });
     };
 
+    const handleMouseMove = (event: MouseEvent) => {
+      lastMouseEvent.current = event;
+      processMousePosition(event);
+    };
+
     const handleMouseLeave = () => {
-      isInsideSection.current = false;
-      gridRef.current?.querySelectorAll(".card").forEach((card) => {
-        (card as HTMLElement).style.setProperty("--glow-intensity", "0");
-      });
-      if (spotlightRef.current) {
-        gsap.to(spotlightRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.out",
-        });
+      lastMouseEvent.current = null;
+      resetSpotlightState();
+    };
+
+    const handleScroll = () => {
+      if (!gridRef.current) return;
+      if (!lastMouseEvent.current) {
+        if (isInsideSection.current) {
+          resetSpotlightState();
+        }
+        return;
       }
+
+      processMousePosition(lastMouseEvent.current);
     };
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("scroll", handleScroll);
       spotlightRef.current?.parentNode?.removeChild(spotlightRef.current);
     };
   }, [gridRef, disableAnimations, enabled, spotlightRadius, glowColor]);

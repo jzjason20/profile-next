@@ -1,10 +1,22 @@
+import DotGrid from "@/components/DotGrid";
 import { contactContent } from "@/data/content";
 import { ArrowRight } from "lucide-react";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="bg-black px-6 py-24 text-white">
-      <div className="mx-auto max-w-4xl rounded-3xl border border-white/5 bg-black/60 p-10 text-center">
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-black px-6 py-24 text-white"
+    >
+      <DotGrid
+        className="pointer-events-none absolute inset-0 opacity-[0.32]"
+        gap={32}
+        dotSize={6}
+        baseColor="#1a1a1a"
+        activeColor="#f5f5f5"
+        proximity={150}
+      />
+      <div className="relative z-10 mx-auto max-w-4xl rounded-3xl border border-white/5 bg-black/60 p-10 text-center">
         <p className="text-sm uppercase tracking-[0.3em] text-white/50">
           Contact
         </p>
