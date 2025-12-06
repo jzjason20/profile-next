@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="bg-[#050018] px-6 py-24 text-white">
+    <section id="contact" className="bg-black px-6 py-24 text-white">
       <div className="mx-auto max-w-4xl rounded-3xl border border-white/5 bg-black/60 p-10 text-center">
         <p className="text-sm uppercase tracking-[0.3em] text-white/50">
           Contact

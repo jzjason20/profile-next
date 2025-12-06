@@ -15,8 +15,8 @@ export function TimelineSection() {
         <div className="mt-16 space-y-12 border-l border-white/10 pl-8">
           {timeline.map((item) => (
             <div key={`${item.date}-${item.detail}`} className="relative">
-              <span className="absolute -left-10 top-2 h-4 w-4 rounded-full border-2 border-sky-200 bg-black" />
-              <p className="text-sm uppercase tracking-wide text-sky-200">
+              <span className="absolute -left-10 top-2 h-4 w-4 rounded-full border-2 border-white/40 bg-black" />
+              <p className="text-sm uppercase tracking-wide text-white/70">
                 {item.date}
               </p>
               <p className="mt-2 text-lg text-white/80">{item.detail}</p>

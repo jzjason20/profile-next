@@ -21,11 +21,11 @@ export function ParticlesBackground() {
       className="absolute inset-0 -z-10"
       options={{
         preset: "links",
-        background: { color: "#030014" },
+        background: { color: "#000000" },
         particles: {
           number: { value: 160, density: { enable: true, area: 900 } },
-          color: { value: "#ffffff" },
-          links: { color: "#b9d6ff", opacity: 0.3, width: 1 },
+          color: { value: "#f5f5f5" },
+          links: { color: "#d1d1d1", opacity: 0.25, width: 1 },
           move: { speed: 1.2 },
         },
         interactivity: {

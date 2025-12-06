@@ -20,7 +20,7 @@ export function HeroSection() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-32"
     >
       <ParticlesBackground />
-      <div className="absolute inset-0 -z-20 bg-linear-to-b from-[#050018] via-[#050018]/80 to-black" />
+      <div className="absolute inset-0 -z-20 bg-linear-to-b from-black via-black/70 to-black" />
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-8 text-center text-white">
         <div className="rounded-full border border-white/10 px-4 py-1 text-xs uppercase tracking-[0.3em] text-white/70">
           Coding since 2017 · Shipping since 2019

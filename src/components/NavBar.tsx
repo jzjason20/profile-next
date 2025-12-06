@@ -25,7 +25,7 @@ export function NavBar() {
       <nav
         className={`flex w-full max-w-3xl items-center justify-between rounded-full border px-6 py-3 text-sm transition-all duration-300 ${
           scrolled
-            ? "border-white/10 bg-black/70 shadow-2xl shadow-purple-500/10 backdrop-blur"
+            ? "border-white/10 bg-black/70 shadow-2xl shadow-white/10 backdrop-blur"
             : "border-transparent bg-white/0"
         }`}
       >
