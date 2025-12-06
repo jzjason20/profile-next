@@ -535,7 +535,7 @@ const BentoCardGrid: React.FC<{
   gridRef?: React.RefObject<HTMLDivElement | null>;
 }> = ({ children, gridRef }) => (
   <div
-    className="bento-section grid gap-2 p-3 max-w-216 select-none relative"
+    className="bento-section grid gap-2 p-3 max-w-1000 select-none relative"
     style={{ fontSize: "clamp(1rem, 0.9rem + 0.5vw, 1.5rem)" }}
     ref={gridRef}
   >
@@ -595,36 +595,34 @@ const MagicBento: React.FC<BentoProps> = ({
           }
           
           .card-responsive {
-            grid-template-columns: 1fr;
-            width: 90%;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0.5rem;
+            padding: 0.5rem 1rem;
           }
           
-          @media (min-width: 600px) {
+          @media (min-width: 768px) {
             .card-responsive {
-              grid-template-columns: repeat(2, 1fr);
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+              max-width: 1100px;
             }
           }
           
-          @media (min-width: 1024px) {
+          @media (min-width: 1280px) {
             .card-responsive {
-              grid-template-columns: repeat(4, 1fr);
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+              max-width: 1200px;
             }
             
             .card-responsive .card:nth-child(3) {
-              grid-column: span 2;
-              grid-row: span 2;
+              grid-column: span 1;
+              grid-row: span 1;
             }
             
             .card-responsive .card:nth-child(4) {
-              grid-column: 1 / span 2;
-              grid-row: 2 / span 2;
-            }
-            
-            .card-responsive .card:nth-child(6) {
-              grid-column: 4;
-              grid-row: 3;
+              grid-column: span 1;
+              grid-row: span 1;
             }
           }
           
@@ -691,16 +689,9 @@ const MagicBento: React.FC<BentoProps> = ({
           }
           
           @media (max-width: 599px) {
-            .card-responsive {
-              grid-template-columns: 1fr;
-              width: 90%;
-              margin: 0 auto;
-              padding: 0.5rem;
-            }
-            
             .card-responsive .card {
               width: 100%;
-              min-height: 180px;
+              min-height: 220px;
             }
           }
         `}
@@ -717,9 +708,9 @@ const MagicBento: React.FC<BentoProps> = ({
       )}
 
       <BentoCardGrid gridRef={gridRef}>
-        <div className="card-responsive grid gap-2">
+        <div className="card-responsive grid gap-4">
           {cards.map((card: BentoCardProps, index: number) => {
-            const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${
+            const baseClassName = `card flex flex-col justify-between relative aspect-[5/4] min-h-[260px] w-full max-w-full p-6 rounded-[28px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_12px_35px_rgba(0,0,0,0.25)] ${
               enableBorderGlow ? "card--border-glow" : ""
             }`;
 
@@ -738,17 +729,17 @@ const MagicBento: React.FC<BentoProps> = ({
                 <div className="card__header flex justify-between gap-3 relative text-white">
                   <span className="card__label text-base">{card.label}</span>
                 </div>
-                <div className="card__content flex flex-col gap-4 relative text-white">
+                <div className="card__content flex flex-col gap-6 relative text-white">
                   <div>
                     <h3
-                      className={`card__title font-normal text-base m-0 mb-1 ${
+                      className={`card__title font-semibold text-lg m-0 mb-2 ${
                         textAutoHide ? "text-clamp-1" : ""
                       }`}
                     >
                       {card.title}
                     </h3>
                     <p
-                      className={`card__description text-xs leading-5 opacity-90 ${
+                      className={`card__description text-sm leading-6 opacity-90 ${
                         textAutoHide ? "text-clamp-2" : ""
                       }`}
                     >

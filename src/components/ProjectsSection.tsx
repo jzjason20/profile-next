@@ -12,7 +12,7 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="bg-black px-6 py-24 text-white">
-      <div className="mx-auto max-w-6xl space-y-12">
+      <div className="mx-auto max-w-12xl space-y-12">
         <div className="space-y-4 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-white/50">
             Projects

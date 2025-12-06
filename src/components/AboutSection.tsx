@@ -30,18 +30,20 @@ export function AboutSection() {
             A console-styled snapshot of who I am and what I obsess over.
           </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
-          <SpotlightCard className="bg-neutral-950/80">
+        <div className="grid gap-8 items-start lg:grid-cols-[1.35fr_0.65fr] xl:grid-cols-[1.45fr_0.55fr]">
+          <SpotlightCard className="bg-neutral-950/80 lg:min-h-112">
             <div className="mb-6 flex items-center gap-2 text-xs text-white/40">
               <span className="h-3 w-3 rounded-full bg-red-400" />
               <span className="h-3 w-3 rounded-full bg-yellow-400" />
               <span className="h-3 w-3 rounded-full bg-green-400" />
             </div>
-            <pre className="space-y-2 font-mono text-sm leading-relaxed text-white/80">
-              {codeLines.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </pre>
+            <div className="max-h-80 overflow-auto pr-2 sm:max-h-96 lg:max-h-none">
+              <pre className="min-w-full space-y-2 font-mono text-sm leading-relaxed text-white/80">
+                {codeLines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </pre>
+            </div>
           </SpotlightCard>
           <div className="space-y-6">
             <SpotlightCard>

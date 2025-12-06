@@ -8,8 +8,8 @@ export const heroContent = {
 };
 
 export const aboutContent = {
-  realName: "Jason Lee",
-  age: 19,
+  realName: "Jason",
+  age: 20,
   summary:
     "Hey, I'm a curious student who loves learning new things by getting hands-on with the code. I split time between ML research, product experiments, and tinkering with UI.",
   skills: [
