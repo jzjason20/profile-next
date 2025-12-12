@@ -1,6 +1,6 @@
 export const heroContent = {
   name: "Jacy",
-  title: "Curious student building playful products",
+  title: "Curious developer building playful products",
   description:
     "I design and code hands-on experiments across web, machine learning, and creative technology — always shipping something new to learn from.",
   primaryCta: { label: "See projects", href: "#projects" },
@@ -11,7 +11,7 @@ export const aboutContent = {
   realName: "Jason",
   age: 20,
   summary:
-    "Hey, I'm a curious student who loves learning new things by getting hands-on with the code. I split time between ML research, product experiments, and tinkering with UI.",
+    "Hey, I'm a curious guy who loves learning new things by getting hands-on with the code. I split time between ML research, product experiments, and tinkering with UI.",
   skills: [
     "HTML/CSS",
     "JavaScript",
@@ -27,22 +27,28 @@ export const aboutContent = {
   ],
   hobbies: ["Coding", "Reading", "Sports", "Gaming", "Listening to music"],
   blogUrl: "https://blog.jacyverse.tech/",
+  blogTitle: "Read my blog",
 };
 
 export const projects = [
+  {
+    title: "AskLexy",
+    description: "Developer at AskLexy. AI-powered learning and career prep platform.",
+    href: "https://asklexy.me",
+    status: "Work",
+  },
+  {
+    title: "LifeXP",
+    description: "A gamified way to track life experiences and skill progression.",
+    href: "https://lifexp.live",
+    status: "Live",
+  },
   {
     title: "Bodhimaram",
     description:
       "Custom WordPress site helping a playschool manage admissions, events, and storytelling.",
     href: "https://bodhimaram.in/",
     status: "Live",
-  },
-  {
-    title: "Expx",
-    description:
-      "Mobile app that lets people teach or learn any skill by pairing mentors with learners.",
-    href: "",
-    status: "WIP",
   },
   {
     title: "Road Network Extraction",
@@ -64,13 +70,6 @@ export const projects = [
       "Predicts pain spikes for cancer patients and suggests interventions before they escalate.",
     href: "https://github.com/arion52/cancer_pain_prediction",
     status: "Clinical",
-  },
-  {
-    title: "Stagdata",
-    description:
-      "Personal publication where I write about experiments, developer workflows, and lessons learned.",
-    href: "https://www.stagdata.com/about",
-    status: "Blog",
   },
 ];
 
@@ -121,6 +120,11 @@ export const timeline = [
     detail:
       "Started building lifeXP, a gamified way to track life experiences.",
   },
+  {
+    date: "May 2025",
+    detail: "Developer at AskLexy",
+    href: "https://asklexy.me",
+  },
 ];
 
 export const contactContent = {
@@ -131,6 +135,7 @@ export const contactContent = {
     { label: "GitHub", href: "https://github.com/arion52" },
     { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
     { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
+    { label: "Discord", href: "jacyjason20" },
   ],
 };
 
@@ -138,4 +143,5 @@ export const socialLinks = [
   { label: "GitHub", href: "https://github.com/arion52" },
   { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
   { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
+  { label: "Discord", href: "jacyjason20" },
 ];

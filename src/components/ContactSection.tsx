@@ -1,8 +1,22 @@
+"use client";
+
 import DotGrid from "@/components/DotGrid";
 import { contactContent } from "@/data/content";
 import { ArrowRight } from "lucide-react";
 
+import { useState } from "react";
+
+
+
 export function ContactSection() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <section
       id="contact"
@@ -32,17 +46,35 @@ export function ContactSection() {
           <ArrowRight className="ml-2 h-4 w-4" />
         </a>
         <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/60">
-          {contactContent.socials.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="transition hover:text-white"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {link.label}
-            </a>
-          ))}
+          {contactContent.socials.map((link) => {
+            if (link.label === "Discord") {
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => handleCopy(link.href)}
+                  className="relative transition hover:text-white"
+                >
+                  {link.label}
+                  {copied && (
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-white px-2 py-1 text-xs font-bold text-black opacity-100 transition-opacity">
+                      Copied!
+                    </span>
+                  )}
+                </button>
+              );
+            }
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                className="transition hover:text-white"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

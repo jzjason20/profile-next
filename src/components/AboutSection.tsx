@@ -92,10 +92,10 @@ export function AboutSection() {
               <a
                 href={aboutContent.blogUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center text-sm text-white transition hover:text-white/80"
               >
-                Stagdata — blog + lab notebook
+                {aboutContent.blogTitle}
               </a>
             </SpotlightCard>
           </div>

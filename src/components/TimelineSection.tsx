@@ -31,7 +31,18 @@ export function TimelineSection() {
               <p className="text-sm uppercase tracking-wide text-white/70">
                 {item.date}
               </p>
-              <p className="mt-2 text-lg text-white/80">{item.detail}</p>
+              {"href" in item && item.href ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 block text-lg text-white/80 transition-colors hover:text-white"
+                >
+                  {item.detail} ↗
+                </a>
+              ) : (
+                <p className="mt-2 text-lg text-white/80">{item.detail}</p>
+              )}
             </div>
           ))}
         </div>
