@@ -50,7 +50,7 @@ export function AboutSection() {
               <span className="h-3 w-3 rounded-full bg-green-400" />
             </div>
             <div className="max-h-80 overflow-auto pr-2 sm:max-h-96 lg:max-h-none">
-              <pre className="min-w-full space-y-2 font-mono text-sm leading-relaxed text-white/80">
+              <pre className="min-w-full space-y-2 font-mono text-sm leading-relaxed text-white/80 whitespace-pre-wrap">
                 {codeLines.map((line) => (
                   <p key={line}>{line}</p>
                 ))}
