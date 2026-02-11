@@ -26,8 +26,8 @@ export const aboutContent = {
     "scikit-learn",
   ],
   hobbies: ["Coding", "Reading", "Sports", "Gaming", "Listening to music"],
-  blogUrl: "https://blog.jacyverse.tech/",
-  blogTitle: "Read my blog",
+  blogUrl: "https://jacyjason.substack.com/",
+  blogTitle: "Check out my substack",
 };
 
 export const projects = [
