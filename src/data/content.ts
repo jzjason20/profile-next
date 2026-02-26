@@ -125,6 +125,23 @@ export const timeline = [
     detail: "Developer at AskLexy",
     href: "https://asklexy.me",
   },
+  {
+    date: "February 2026",
+    detail:
+      "Published IEEE paper: ENDCL — Attention-Enhanced CNN-BiLSTM model for automated cardiovascular disease detection.",
+    href: "https://ieeexplore.ieee.org/abstract/document/11376121",
+  },
+];
+
+export const publications = [
+  {
+    title: "ENDCL: Attention-Enhanced CNN-BiLSTM",
+    description:
+      "Automated cardiovascular disease detection model combining CNN, BiLSTM, and attention mechanisms. Published at IEEE.",
+    href: "https://ieeexplore.ieee.org/abstract/document/11376121",
+    venue: "IEEE",
+    year: "2026",
+  },
 ];
 
 export const contactContent = {
