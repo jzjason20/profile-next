@@ -5,6 +5,7 @@ import { HeroSection } from "@/components/HeroSection";
 import Lanyard from "@/components/Lanyard";
 import { NavBar } from "@/components/NavBar";
 import { ProjectsSection } from "@/components/ProjectsSection";
+import { PublicationsSection } from "@/components/PublicationsSection";
 import { TimelineSection } from "@/components/TimelineSection";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ProjectsSection />
+      <PublicationsSection />
       <TimelineSection />
       <ContactSection />
       <Footer />
