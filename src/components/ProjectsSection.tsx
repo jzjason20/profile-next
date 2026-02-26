@@ -1,14 +1,39 @@
+"use client";
+
 import DotGrid from "@/components/DotGrid";
+import { FadeIn } from "@/components/FadeIn";
 import MagicBento, { type BentoCardProps } from "@/components/MagicBento";
 import { projects } from "@/data/content";
+import { useState } from "react";
+
+const STATUS_COLORS: Record<string, string> = {
+  Live: "#22c55e",
+  Work: "#3b82f6",
+  Research: "#a855f7",
+  Clinical: "#f97316",
+};
+
+const ALL_TAGS = [
+  "All",
+  ...Array.from(new Set(projects.flatMap((p) => p.tags))),
+];
 
 export function ProjectsSection() {
-  const bentoItems: BentoCardProps[] = projects.map((project) => ({
+  const [activeTag, setActiveTag] = useState("All");
+
+  const filtered =
+    activeTag === "All"
+      ? projects
+      : projects.filter((p) => p.tags.includes(activeTag));
+
+  const bentoItems: BentoCardProps[] = filtered.map((project) => ({
     title: project.title,
     description: project.description,
     label: project.status,
+    labelColor: STATUS_COLORS[project.status],
+    active: project.active,
     href: project.href,
-    color: project.status === "WIP" ? "#0a0a0a" : "#050505",
+    color: "#050505",
   }));
 
   return (
@@ -24,7 +49,7 @@ export function ProjectsSection() {
         activeColor="#f5f5f5"
         proximity={150}
       />
-      <div className="relative z-10 mx-auto max-w-6xl space-y-12 xl:max-w-7xl">
+      <FadeIn className="relative z-10 mx-auto max-w-6xl space-y-12 xl:max-w-7xl">
         <div className="space-y-4 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-white/50">
             Projects
@@ -36,6 +61,24 @@ export function ProjectsSection() {
             Product builds, research detours, and shipping practice reps.
           </p>
         </div>
+
+        {/* Filter tags */}
+        <div className="flex flex-wrap justify-center gap-2">
+          {ALL_TAGS.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(tag)}
+              className={`rounded-full border px-4 py-1.5 text-sm transition-all duration-200 ${
+                activeTag === tag
+                  ? "border-white bg-white text-black"
+                  : "border-white/15 text-white/60 hover:border-white/30 hover:text-white"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
         <div className="flex justify-center">
           <MagicBento
             items={bentoItems}
@@ -47,7 +90,7 @@ export function ProjectsSection() {
             textAutoHide
           />
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }

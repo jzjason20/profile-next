@@ -36,12 +36,16 @@ export const projects = [
     description: "Developer at AskLexy. AI-powered learning and career prep platform.",
     href: "https://asklexy.me",
     status: "Work",
+    tags: ["AI", "Web"],
+    active: true,
   },
   {
     title: "LifeXP",
     description: "A gamified way to track life experiences and skill progression.",
     href: "https://lifexp.live",
     status: "Live",
+    tags: ["App", "Web"],
+    active: true,
   },
   {
     title: "Bodhimaram",
@@ -49,6 +53,8 @@ export const projects = [
       "Custom WordPress site helping a playschool manage admissions, events, and storytelling.",
     href: "https://bodhimaram.in/",
     status: "Live",
+    tags: ["Web"],
+    active: false,
   },
   {
     title: "Road Network Extraction",
@@ -56,6 +62,8 @@ export const projects = [
       "Hybrid CNN + U-Net model extracting road graphs from satellite imagery for rapid mapping.",
     href: "https://github.com/arion52/satellite-road-extraction",
     status: "Research",
+    tags: ["AI", "Research"],
+    active: false,
   },
   {
     title: "solarVert",
@@ -63,6 +71,8 @@ export const projects = [
       "Dashboard that helps solar panel owners monitor uptime, faults, and maintenance queues.",
     href: "https://github.com/arion52/solarVert",
     status: "Live",
+    tags: ["App", "Web"],
+    active: false,
   },
   {
     title: "Cancer Pain Prediction",
@@ -70,6 +80,8 @@ export const projects = [
       "Predicts pain spikes for cancer patients and suggests interventions before they escalate.",
     href: "https://github.com/arion52/cancer_pain_prediction",
     status: "Clinical",
+    tags: ["AI", "Research", "Clinical"],
+    active: false,
   },
 ];
 
@@ -126,7 +138,7 @@ export const timeline = [
     href: "https://asklexy.me",
   },
   {
-    date: "February 2026",
+    date: "December 2025",
     detail:
       "Published IEEE paper: ENDCL — Attention-Enhanced CNN-BiLSTM model for automated cardiovascular disease detection.",
     href: "https://ieeexplore.ieee.org/abstract/document/11376121",
@@ -140,7 +152,7 @@ export const publications = [
       "Automated cardiovascular disease detection model combining CNN, BiLSTM, and attention mechanisms. Published at IEEE.",
     href: "https://ieeexplore.ieee.org/abstract/document/11376121",
     venue: "IEEE",
-    year: "2026",
+    year: "Dec 2025",
   },
 ];
 

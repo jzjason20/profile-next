@@ -1,4 +1,5 @@
 import DotGrid from "@/components/DotGrid";
+import { FadeIn } from "@/components/FadeIn";
 import SpotlightCard from "@/components/SpotlightCard";
 import { aboutContent } from "@/data/content";
 
@@ -30,7 +31,7 @@ export function AboutSection() {
         activeColor="#fafafa"
         proximity={160}
       />
-      <div className="relative z-10 mx-auto max-w-6xl space-y-12">
+      <FadeIn className="relative z-10 mx-auto max-w-6xl space-y-12">
         <div className="space-y-4 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-white/50">
             About
@@ -93,14 +94,14 @@ export function AboutSection() {
                 href={aboutContent.blogUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center text-sm text-white transition hover:text-white/80"
+                className="mt-6 inline-flex items-center gap-1 text-sm text-white transition hover:text-white/80"
               >
-                {aboutContent.blogTitle}
+                {aboutContent.blogTitle} ↗
               </a>
             </SpotlightCard>
           </div>
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }

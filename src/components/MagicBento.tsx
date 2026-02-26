@@ -8,6 +8,8 @@ export interface BentoCardProps {
   title?: string;
   description?: string;
   label?: string;
+  labelColor?: string;
+  active?: boolean;
   textAutoHide?: boolean;
   disableAnimations?: boolean;
   href?: string;
@@ -756,8 +758,30 @@ const MagicBento: React.FC<BentoProps> = ({
 
             const cardBody = (
               <>
-                <div className="card__header flex justify-between gap-3 relative text-white">
-                  <span className="card__label text-base">{card.label}</span>
+                <div className="card__header flex items-center justify-between gap-3 relative text-white">
+                  <span
+                    className="card__label rounded-full border px-2.5 py-0.5 text-xs font-medium"
+                    style={{
+                      color: card.labelColor ?? "rgba(255,255,255,0.6)",
+                      borderColor: card.labelColor
+                        ? `${card.labelColor}50`
+                        : "rgba(255,255,255,0.15)",
+                      backgroundColor: card.labelColor
+                        ? `${card.labelColor}18`
+                        : "transparent",
+                    }}
+                  >
+                    {card.label}
+                  </span>
+                  {card.active && (
+                    <span className="flex items-center gap-1.5 text-xs text-emerald-400">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                      </span>
+                      Active
+                    </span>
+                  )}
                 </div>
                 <div className="card__content flex flex-col gap-6 relative text-white">
                   <div>
