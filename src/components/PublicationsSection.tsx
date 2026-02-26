@@ -1,3 +1,4 @@
+import { FadeIn } from "@/components/FadeIn";
 import { publications } from "@/data/content";
 
 export function PublicationsSection() {
@@ -6,7 +7,7 @@ export function PublicationsSection() {
       id="publications"
       className="relative bg-black px-6 py-24 text-white"
     >
-      <div className="relative z-10 mx-auto max-w-4xl space-y-12">
+      <FadeIn className="relative z-10 mx-auto max-w-4xl space-y-12">
         <div className="space-y-4 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-white/50">
             Publications
@@ -40,7 +41,7 @@ export function PublicationsSection() {
             </a>
           ))}
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }
