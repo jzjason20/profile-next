@@ -80,13 +80,13 @@ export default function NowPage() {
           <div className="overflow-hidden rounded-2xl border border-white/10 p-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://ghchart.rshah.org/arion52"
-              alt="arion52 GitHub contribution graph"
+              src="https://ghchart.rshah.org/jzjason20"
+              alt="jzjason20 GitHub contribution graph"
               className="w-full"
               style={{ filter: "invert(1) hue-rotate(180deg)" }}
             />
             <p className="mt-2 text-center text-xs text-white/30">
-              Coding since 2017 · github.com/arion52
+              Coding since 2017 · github.com/jzjason20
             </p>
           </div>
         </div>
