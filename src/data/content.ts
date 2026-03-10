@@ -1,3 +1,44 @@
+export interface Project {
+  title: string;
+  description: string;
+  href: string;
+  status: "Work" | "Live" | "Research" | "Clinical";
+  tags: string[];
+  active: boolean;
+}
+
+export interface TimelineItem {
+  date: string;
+  detail: string;
+  href?: string;
+}
+
+export interface Publication {
+  title: string;
+  description: string;
+  href: string;
+  venue: string;
+  year: string;
+}
+
+export interface Award {
+  place: string;
+  event: string;
+  note?: string;
+}
+
+export interface SocialLink {
+  label: string;
+  href: string;
+}
+
+export interface NowProject {
+  name: string;
+  href: string;
+  description: string;
+  status: string;
+}
+
 export const heroContent = {
   name: "Jacy",
   title: "Curious developer building playful products",
@@ -30,10 +71,11 @@ export const aboutContent = {
   blogTitle: "Check out my substack",
 };
 
-export const projects = [
+export const projects: Project[] = [
   {
     title: "AskLexy",
-    description: "Developer at AskLexy. AI-powered learning and career prep platform.",
+    description:
+      "Developer at AskLexy. AI-powered learning and career prep platform.",
     href: "https://asklexy.me",
     status: "Work",
     tags: ["AI", "Web"],
@@ -41,7 +83,8 @@ export const projects = [
   },
   {
     title: "LifeXP",
-    description: "A gamified way to track life experiences and skill progression.",
+    description:
+      "A gamified way to track life experiences and skill progression.",
     href: "https://lifexp.live",
     status: "Live",
     tags: ["App", "Web"],
@@ -85,7 +128,7 @@ export const projects = [
   },
 ];
 
-export const timeline = [
+export const timeline: TimelineItem[] = [
   { date: "August 2017", detail: "Started coding in C and Python." },
   {
     date: "May 2019",
@@ -145,7 +188,7 @@ export const timeline = [
   },
 ];
 
-export const publications = [
+export const publications: Publication[] = [
   {
     title: "ENDCL: Attention-Enhanced CNN-BiLSTM",
     description:
@@ -156,7 +199,7 @@ export const publications = [
   },
 ];
 
-export const awards = [
+export const awards: Award[] = [
   { place: "2nd", event: "Human Pose Estimation", note: "+ internship offer" },
   { place: "3rd", event: "Satellite Road Extraction (CNN + U-Net)" },
   { place: "3rd", event: "Cancer Pain Prediction Platform" },
@@ -172,12 +215,41 @@ export const contactContent = {
     { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
     { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
     { label: "Discord", href: "jacyjason20" },
-  ],
+  ] as SocialLink[],
 };
 
-export const socialLinks = [
+export const socialLinks: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/jzjason20" },
   { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
   { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
   { label: "Discord", href: "jacyjason20" },
 ];
+
+export const nowContent = {
+  lastUpdated: "March 2026",
+  building: [
+    {
+      name: "AskLexy",
+      href: "https://asklexy.me",
+      description:
+        "AI-powered learning and career prep platform. Working on the developer experience and onboarding flows.",
+      status: "Active",
+    },
+    {
+      name: "LifeXP",
+      href: "https://lifexp.live",
+      description:
+        "Gamified life experience tracker. Iterating on the progression system and data visualisations.",
+      status: "Active",
+    },
+  ] as NowProject[],
+  reading: [
+    "The Pragmatic Programmer — Hunt & Thomas",
+    "The Design of Everyday Things — Don Norman",
+  ],
+  obsessed: [
+    "Agentic AI workflows and how far you can push tool-use",
+    "Building products that feel alive without overengineering them",
+    "Tiny physical interfaces — buttons, knobs, haptics",
+  ],
+};

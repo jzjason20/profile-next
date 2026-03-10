@@ -38,7 +38,8 @@ export function TimelineSection() {
         <div className="mt-16 space-y-12 border-l border-white/10 pl-8">
           {visible.map((item, index) => {
             const isLast =
-              index === (showAll ? lastIndex : Math.min(INITIAL_COUNT - 1, lastIndex));
+              index ===
+              (showAll ? lastIndex : Math.min(INITIAL_COUNT - 1, lastIndex));
             const isActualLast = timeline.indexOf(item) === lastIndex;
 
             return (
@@ -59,7 +60,7 @@ export function TimelineSection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, ease: "easeOut" as const }}
                   >
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75" />
+                    <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75" />
                     <span className="relative inline-flex h-4 w-4 rounded-full border-2 border-white bg-black shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
                   </motion.span>
                 ) : (

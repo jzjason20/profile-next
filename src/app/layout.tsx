@@ -35,6 +35,11 @@ export const metadata: Metadata = {
     description:
       "Developer building experiments across web, ML, and creative technology.",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 export default function RootLayout({
@@ -42,8 +47,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Jason (Jacy)",
+    url: "https://jzxx.dev",
+    jobTitle: "Creative Developer",
+    sameAs: [
+      "https://github.com/jzjason20",
+      "https://www.instagram.com/jazjason20/",
+    ],
+  };
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-black text-white antialiased`}
       >

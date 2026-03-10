@@ -1,13 +1,28 @@
 "use client";
 
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { initParticlesEngine, Particles } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import { useEffect, useState } from "react";
 
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return mobile;
+}
+
 export function ParticlesBackground() {
   const [ready, setReady] = useState(false);
+  const reducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (reducedMotion) return;
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     })
@@ -15,9 +30,11 @@ export function ParticlesBackground() {
       .catch((error) => {
         console.error("Particles failed to initialize", error);
       });
-  }, []);
+  }, [reducedMotion]);
 
-  if (!ready) return null;
+  if (reducedMotion || !ready) return null;
+
+  const particleCount = isMobile ? 50 : 140;
 
   return (
     <Particles
@@ -40,7 +57,7 @@ export function ParticlesBackground() {
           },
         },
         particles: {
-          number: { value: 140, density: { enable: true } },
+          number: { value: particleCount, density: { enable: true } },
           color: { value: "#f5f5f5" },
           opacity: { value: 0.7 },
           size: { value: { min: 0.5, max: 2 } },

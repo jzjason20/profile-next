@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "type-check": "tsc --noEmit",
+    "validate": "npm run lint && npm run type-check"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

@@ -11,7 +11,7 @@ interface Post {
 function extractTag(xml: string, tag: string): string {
   const re = new RegExp(
     `<${tag}[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/${tag}>`,
-    "i"
+    "i",
   );
   return xml.match(re)?.[1]?.trim() ?? "";
 }
@@ -38,6 +38,7 @@ function formatDate(raw: string): string {
 async function getPosts(): Promise<Post[]> {
   try {
     const res = await fetch("https://jacyjason.substack.com/feed", {
+      signal: AbortSignal.timeout(5000),
       next: { revalidate: 3600 },
     });
     if (!res.ok) return [];
@@ -46,7 +47,7 @@ async function getPosts(): Promise<Post[]> {
     return items.slice(0, 3).map((item) => {
       const description = stripHtml(extractTag(item, "description")).slice(
         0,
-        120
+        120,
       );
       return {
         title: extractTag(item, "title"),
@@ -62,7 +63,30 @@ async function getPosts(): Promise<Post[]> {
 
 export async function BlogSection() {
   const posts = await getPosts();
-  if (posts.length === 0) return null;
+  if (posts.length === 0) {
+    return (
+      <section id="writing" className="relative bg-black px-6 py-24 text-white">
+        <div className="mx-auto max-w-4xl space-y-4 text-center">
+          <p className="text-sm uppercase tracking-[0.3em] text-white/50">
+            Writing
+          </p>
+          <h2 className="text-3xl font-bold sm:text-5xl">From the blog</h2>
+          <p className="text-white/50">
+            Posts are temporarily unavailable. Check back soon or visit Substack
+            directly.
+          </p>
+          <a
+            href="https://jacyjason.substack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-full border border-white/20 px-6 py-2.5 text-sm text-white/60 transition hover:border-white/40 hover:text-white"
+          >
+            Visit Substack →
+          </a>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="writing" className="relative bg-black px-6 py-24 text-white">

@@ -36,6 +36,8 @@ export interface LanyardData {
   activities: Activity[];
 }
 
+const MAX_RECONNECT_ATTEMPTS = 10;
+
 export function useLanyard(): LanyardData | null {
   const [data, setData] = useState<LanyardData | null>(null);
 
@@ -43,47 +45,73 @@ export function useLanyard(): LanyardData | null {
     let ws: WebSocket;
     let heartbeatInterval: ReturnType<typeof setInterval>;
     let reconnectTimeout: ReturnType<typeof setTimeout>;
+    let reconnectAttempts = 0;
+    let disposed = false;
+
+    function cleanup() {
+      clearInterval(heartbeatInterval);
+      clearTimeout(reconnectTimeout);
+    }
+
+    function scheduleReconnect() {
+      if (disposed || reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) return;
+      cleanup();
+      const delay = Math.min(5000 * Math.pow(1.5, reconnectAttempts), 60000);
+      reconnectAttempts++;
+      reconnectTimeout = setTimeout(connect, delay);
+    }
 
     function connect() {
+      if (disposed) return;
+      cleanup();
+
       ws = new WebSocket("wss://api.lanyard.rest/socket");
 
       ws.onmessage = (event) => {
-        const msg = JSON.parse(event.data as string);
+        try {
+          const msg = JSON.parse(event.data as string);
 
-        if (msg.op === 1) {
-          // HELLO — subscribe and start heartbeat
-          ws.send(
-            JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } })
-          );
-          heartbeatInterval = setInterval(() => {
-            if (ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({ op: 3 }));
-            }
-          }, msg.d.heartbeat_interval);
-        } else if (msg.op === 0) {
-          // INIT_STATE or PRESENCE_UPDATE
-          const d = msg.d;
-          setData({
-            discord_status: d.discord_status,
-            listening_to_spotify: d.listening_to_spotify,
-            spotify: d.spotify ?? null,
-            activities: d.activities ?? [],
-          });
+          if (msg.op === 1) {
+            // HELLO — subscribe and start heartbeat
+            ws.send(
+              JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } }),
+            );
+            heartbeatInterval = setInterval(() => {
+              if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ op: 3 }));
+              }
+            }, msg.d.heartbeat_interval);
+          } else if (msg.op === 0) {
+            // INIT_STATE or PRESENCE_UPDATE
+            reconnectAttempts = 0;
+            const d = msg.d;
+            setData({
+              discord_status: d.discord_status,
+              listening_to_spotify: d.listening_to_spotify,
+              spotify: d.spotify ?? null,
+              activities: d.activities ?? [],
+            });
+          }
+        } catch {
+          // Ignore malformed messages
         }
       };
 
+      ws.onerror = () => {
+        ws.close();
+      };
+
       ws.onclose = () => {
-        clearInterval(heartbeatInterval);
-        // Reconnect after 5s
-        reconnectTimeout = setTimeout(connect, 5000);
+        cleanup();
+        scheduleReconnect();
       };
     }
 
     connect();
 
     return () => {
-      clearInterval(heartbeatInterval);
-      clearTimeout(reconnectTimeout);
+      disposed = true;
+      cleanup();
       ws?.close();
     };
   }, []);

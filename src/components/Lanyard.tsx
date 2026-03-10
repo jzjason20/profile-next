@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import {
   Environment,
@@ -6,26 +5,69 @@ import {
   useGLTF,
   useTexture,
 } from "@react-three/drei";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
+import { Canvas, extend, type ThreeEvent, useFrame } from "@react-three/fiber";
 import {
   BallCollider,
   CuboidCollider,
   Physics,
   RigidBody,
-  RigidBodyProps,
+  type RigidBodyProps,
   useRopeJoint,
   useSphericalJoint,
 } from "@react-three/rapier";
 import clsx from "clsx";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
-import { useEffect, useRef, useState } from "react";
+import {
+  Component,
+  type ErrorInfo,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as THREE from "three";
+
+/* eslint-disable @typescript-eslint/no-namespace */
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    meshLineGeometry: JSX.IntrinsicElements["mesh"];
+    meshLineMaterial: JSX.IntrinsicElements["mesh"] & {
+      color?: string;
+      depthTest?: boolean;
+      resolution?: [number, number];
+      useMap?: boolean;
+      map?: THREE.Texture;
+      repeat?: [number, number];
+      lineWidth?: number;
+    };
+  }
+}
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
 const CARD_GLB_PATH = "/cme.glb";
 const CARD_TEXTURE_PATH = "/logo-card.png";
 const STRAP_TEXTURE_PATH = "/lanyard.png";
+
+class LanyardErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("Lanyard 3D render failed:", error, info);
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
 
 interface LanyardProps {
   position?: [number, number, number];
@@ -43,7 +85,7 @@ export default function Lanyard({
   className,
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(
-    () => typeof window !== "undefined" && window.innerWidth < 768
+    () => typeof window !== "undefined" && window.innerWidth < 768,
   );
 
   useEffect(() => {
@@ -56,52 +98,56 @@ export default function Lanyard({
     <div
       className={clsx(
         "relative z-0 h-full w-full transform origin-top-right drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]",
-        className
+        className,
       )}
+      role="img"
+      aria-label="Animated lanyard card"
     >
-      <Canvas
-        camera={{ position, fov }}
-        dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent }}
-        onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-        }
-      >
-        <ambientLight intensity={Math.PI} />
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-          <Band isMobile={isMobile} />
-        </Physics>
-        <Environment blur={0.75}>
-          <Lightformer
-            intensity={2}
-            color="white"
-            position={[0, -1, 5]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[-1, -1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[1, 1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={10}
-            color="white"
-            position={[-10, 0, 14]}
-            rotation={[0, Math.PI / 2, Math.PI / 3]}
-            scale={[100, 10, 1]}
-          />
-        </Environment>
-      </Canvas>
+      <LanyardErrorBoundary>
+        <Canvas
+          camera={{ position, fov }}
+          dpr={[1, isMobile ? 1.5 : 2]}
+          gl={{ alpha: transparent }}
+          onCreated={({ gl }) =>
+            gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
+          }
+        >
+          <ambientLight intensity={Math.PI} />
+          <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+            <Band isMobile={isMobile} />
+          </Physics>
+          <Environment blur={0.75}>
+            <Lightformer
+              intensity={2}
+              color="white"
+              position={[0, -1, 5]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[-1, -1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[1, 1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={10}
+              color="white"
+              position={[-10, 0, 14]}
+              rotation={[0, Math.PI / 2, Math.PI / 3]}
+              scale={[100, 10, 1]}
+            />
+          </Environment>
+        </Canvas>
+      </LanyardErrorBoundary>
     </div>
   );
 }
@@ -144,7 +190,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
         new THREE.Vector3(),
         new THREE.Vector3(),
         new THREE.Vector3(),
-      ])
+      ]),
   );
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
@@ -182,15 +228,15 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
       [j1, j2].forEach((ref) => {
         if (!ref.current.lerped)
           ref.current.lerped = new THREE.Vector3().copy(
-            ref.current.translation()
+            ref.current.translation(),
           );
         const clampedDistance = Math.max(
           0.1,
-          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())),
         );
         ref.current.lerped.lerp(
           ref.current.translation(),
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
         );
       });
       curve.points[0].copy(j3.current.translation());
@@ -258,16 +304,16 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={(e: any) => {
-              e.target.releasePointerCapture(e.pointerId);
+            onPointerUp={(e: ThreeEvent<PointerEvent>) => {
+              (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
               drag(false);
             }}
-            onPointerDown={(e: any) => {
-              e.target.setPointerCapture(e.pointerId);
+            onPointerDown={(e: ThreeEvent<PointerEvent>) => {
+              (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
-                  .sub(vec.copy(card.current.translation()))
+                  .sub(vec.copy(card.current.translation())),
               );
             }}
           >

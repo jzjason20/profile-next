@@ -1,8 +1,22 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+function throttle<T extends (...args: unknown[]) => void>(
+  fn: T,
+  ms: number,
+): T {
+  let last = 0;
+  return ((...args: unknown[]) => {
+    const now = performance.now();
+    if (now - last >= ms) {
+      last = now;
+      fn(...args);
+    }
+  }) as T;
+}
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -12,9 +26,7 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-const pageLinks = [
-  { label: "Now", href: "/now" },
-];
+const pageLinks = [{ label: "Now", href: "/now" }];
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,8 +43,7 @@ export function NavBar() {
       setScrolled(scrollY > 40);
 
       // Scroll progress bar
-      const height =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(height > 0 ? (scrollY / height) * 100 : 0);
 
       // Active section based on scroll position
@@ -48,9 +59,10 @@ export function NavBar() {
       setActiveSection(current);
     };
 
+    const throttledScroll = throttle(handleScroll, 30);
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledScroll);
   }, []);
 
   // Close menu when clicking outside
@@ -107,7 +119,11 @@ export function NavBar() {
                       <motion.span
                         layoutId="nav-indicator"
                         className="mt-0.5 block h-[2px] rounded-full bg-white"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
                       />
                     )}
                   </a>
@@ -129,6 +145,7 @@ export function NavBar() {
               className="flex flex-col items-center justify-center gap-1.5 md:hidden"
               onClick={() => setMenuOpen((prev) => !prev)}
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
               <span
                 className={`block h-0.5 w-5 bg-white transition-all duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
@@ -157,7 +174,9 @@ export function NavBar() {
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
                     className={`py-3 text-sm transition ${
-                      isActive ? "text-white" : "text-neutral-300 hover:text-white"
+                      isActive
+                        ? "text-white"
+                        : "text-neutral-300 hover:text-white"
                     }`}
                   >
                     {item.label}
