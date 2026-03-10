@@ -14,8 +14,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-black text-white">
       <NavBar />
-      <div className="pointer-events-auto fixed right-4 top-16 z-40 hidden lg:block h-96 w-[220px]">
-        <Lanyard className="h-full w-full" />
+      <div className="pointer-events-auto fixed right-4 top-0 z-40 hidden lg:block h-[32rem] w-[220px]">
+        <Lanyard className="h-full w-full" position={[0, -1.5, 30]} />
       </div>
       <HeroSection />
       <AwardsSection />
