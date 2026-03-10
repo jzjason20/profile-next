@@ -3,6 +3,7 @@
 import DotGrid from "@/components/DotGrid";
 import { FadeIn } from "@/components/FadeIn";
 import { timeline } from "@/data/content";
+import { motion } from "motion/react";
 import { useState } from "react";
 
 const INITIAL_COUNT = 6;
@@ -41,15 +42,34 @@ export function TimelineSection() {
             const isActualLast = timeline.indexOf(item) === lastIndex;
 
             return (
-              <div key={`${item.date}-${item.detail}`} className="relative">
+              <motion.div
+                key={`${item.date}-${item.detail}`}
+                className="relative"
+                initial={{ opacity: 0, x: -18 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
                 {/* Timeline dot */}
                 {isActualLast ? (
-                  <span className="absolute -left-10 top-2 flex h-4 w-4 items-center justify-center">
+                  <motion.span
+                    className="absolute -left-10 top-2 flex h-4 w-4 items-center justify-center"
+                    initial={{ scale: 0.4, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75" />
                     <span className="relative inline-flex h-4 w-4 rounded-full border-2 border-white bg-black shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
-                  </span>
+                  </motion.span>
                 ) : (
-                  <span className="absolute -left-10 top-2 h-4 w-4 rounded-full border-2 border-white/40 bg-black" />
+                  <motion.span
+                    className="absolute -left-10 top-2 h-4 w-4 rounded-full border-2 border-white/40 bg-black"
+                    initial={{ scale: 0.4, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                  />
                 )}
                 <p className="text-sm uppercase tracking-wide text-white/70">
                   {item.date}
@@ -66,7 +86,7 @@ export function TimelineSection() {
                 ) : (
                   <p className="mt-2 text-lg text-white/80">{item.detail}</p>
                 )}
-              </div>
+              </motion.div>
             );
           })}
         </div>
