@@ -1,4 +1,5 @@
 import { NowSpotify } from "@/components/NowSpotify";
+import { NowActivity } from "@/components/NowActivity";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
@@ -77,6 +78,9 @@ export default function NowPage() {
 
         {/* Spotify */}
         <NowSpotify />
+
+        {/* Discord activity */}
+        <NowActivity />
 
         {/* GitHub graph */}
         <div className="space-y-4">
