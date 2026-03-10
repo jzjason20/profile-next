@@ -6,6 +6,21 @@ const DISCORD_ID = "1188830310473928734";
 
 export type DiscordStatus = "online" | "idle" | "dnd" | "offline";
 
+export interface LanyardActivity {
+  name: string;
+  type: number; // 0=Playing, 1=Streaming, 2=Listening, 3=Watching, 4=Custom, 5=Competing
+  state?: string;
+  details?: string;
+  application_id?: string;
+  timestamps?: { start?: number; end?: number };
+  assets?: {
+    large_image?: string;
+    large_text?: string;
+    small_image?: string;
+    small_text?: string;
+  };
+}
+
 export interface LanyardData {
   discord_status: DiscordStatus;
   listening_to_spotify: boolean;
@@ -17,6 +32,7 @@ export interface LanyardData {
     track_id: string;
     timestamps: { start: number; end: number };
   } | null;
+  activities: LanyardActivity[];
 }
 
 export function useLanyard(): LanyardData | null {
@@ -50,6 +66,7 @@ export function useLanyard(): LanyardData | null {
             discord_status: d.discord_status,
             listening_to_spotify: d.listening_to_spotify,
             spotify: d.spotify ?? null,
+            activities: d.activities ?? [],
           });
         }
       };
