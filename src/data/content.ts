@@ -60,7 +60,7 @@ export const projects = [
     title: "Road Network Extraction",
     description:
       "Hybrid CNN + U-Net model extracting road graphs from satellite imagery for rapid mapping.",
-    href: "https://github.com/arion52/satellite-road-extraction",
+    href: "https://github.com/jzjason20/satellite-road-extraction",
     status: "Research",
     tags: ["AI", "Research"],
     active: false,
@@ -69,7 +69,7 @@ export const projects = [
     title: "solarVert",
     description:
       "Dashboard that helps solar panel owners monitor uptime, faults, and maintenance queues.",
-    href: "https://github.com/arion52/solarVert",
+    href: "https://github.com/jzjason20/solarVert",
     status: "Live",
     tags: ["App", "Web"],
     active: false,
@@ -78,7 +78,7 @@ export const projects = [
     title: "Cancer Pain Prediction",
     description:
       "Predicts pain spikes for cancer patients and suggests interventions before they escalate.",
-    href: "https://github.com/arion52/cancer_pain_prediction",
+    href: "https://github.com/jzjason20/cancer_pain_prediction",
     status: "Clinical",
     tags: ["AI", "Research", "Clinical"],
     active: false,
@@ -156,12 +156,19 @@ export const publications = [
   },
 ];
 
+export const awards = [
+  { place: "2nd", event: "Human Pose Estimation", note: "+ internship offer" },
+  { place: "3rd", event: "Satellite Road Extraction (CNN + U-Net)" },
+  { place: "3rd", event: "Cancer Pain Prediction Platform" },
+  { place: "Top 5", event: "National Hackathon @ Google" },
+];
+
 export const contactContent = {
   message:
     "Need a teammate, an engineer who loves storytelling, or someone to jam on product ideas with? I'm just an email away.",
   email: "mailto:jazjasonlee@gmail.com",
   socials: [
-    { label: "GitHub", href: "https://github.com/arion52" },
+    { label: "GitHub", href: "https://github.com/jzjason20" },
     { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
     { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
     { label: "Discord", href: "jacyjason20" },
@@ -169,7 +176,7 @@ export const contactContent = {
 };
 
 export const socialLinks = [
-  { label: "GitHub", href: "https://github.com/arion52" },
+  { label: "GitHub", href: "https://github.com/jzjason20" },
   { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
   { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
   { label: "Discord", href: "jacyjason20" },

@@ -4,6 +4,7 @@ import BlurText from "@/components/BlurText";
 import { FadeIn } from "@/components/FadeIn";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
 import { contactContent, heroContent } from "@/data/content";
+import { useLanyard, type DiscordStatus } from "@/hooks/useLanyard";
 import { ArrowRight, Github, Instagram, Mail } from "lucide-react";
 import { useState } from "react";
 
@@ -29,8 +30,16 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   Discord: DiscordIcon,
 };
 
+const statusColor: Record<DiscordStatus, string> = {
+  online: "bg-emerald-400",
+  idle: "bg-yellow-400",
+  dnd: "bg-red-500",
+  offline: "bg-zinc-500",
+};
+
 export function HeroSection() {
   const [copied, setCopied] = useState(false);
+  const lanyard = useLanyard();
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -97,6 +106,11 @@ export function HeroSection() {
                   aria-label="Copy Discord ID"
                 >
                   <Icon size={22} />
+                  {lanyard && (
+                    <span
+                      className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-black ${statusColor[lanyard.discord_status]}`}
+                    />
+                  )}
                   {copied && (
                     <span className="absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-white px-2 py-1 text-xs font-bold text-black opacity-100 transition-opacity">
                       Copied!
