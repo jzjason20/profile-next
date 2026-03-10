@@ -1,5 +1,6 @@
 import { AboutSection } from "@/components/AboutSection";
 import { AwardsSection } from "@/components/AwardsSection";
+import { BlogSection } from "@/components/BlogSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
@@ -21,6 +22,7 @@ export default function Home() {
       <AboutSection />
       <ProjectsSection />
       <PublicationsSection />
+      <BlogSection />
       <TimelineSection />
       <ContactSection />
       <Footer />

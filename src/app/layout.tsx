@@ -26,21 +26,14 @@ export const metadata: Metadata = {
     description:
       "Developer building experiments across web, ML, and creative technology. IEEE-published researcher. Shipping since 2019.",
     type: "website",
-    images: [
-      {
-        url: "/logo-card.png",
-        width: 1200,
-        height: 630,
-        alt: "Jacy — Creative Developer",
-      },
-    ],
+    url: "https://jzxx.dev",
+    siteName: "Jacy",
   },
   twitter: {
     card: "summary_large_image",
     title: "Jacy — Creative Developer",
     description:
       "Developer building experiments across web, ML, and creative technology.",
-    images: ["/logo-card.png"],
   },
 };
 
