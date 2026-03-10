@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const navItems = [
@@ -99,7 +100,11 @@ export function NavBar() {
                   >
                     {item.label}
                     {isActive && (
-                      <span className="mt-0.5 block h-[2px] rounded-full bg-white" />
+                      <motion.span
+                        layoutId="nav-indicator"
+                        className="mt-0.5 block h-[2px] rounded-full bg-white"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
                     )}
                   </a>
                 );

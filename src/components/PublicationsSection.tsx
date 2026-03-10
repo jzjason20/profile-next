@@ -1,5 +1,18 @@
+"use client";
+
 import { FadeIn } from "@/components/FadeIn";
 import { publications } from "@/data/content";
+import { motion } from "motion/react";
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const card = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
 
 export function PublicationsSection() {
   return (
@@ -17,10 +30,17 @@ export function PublicationsSection() {
             Peer-reviewed work from my research experiments.
           </p>
         </div>
-        <div className="space-y-4">
+        <motion.div
+          className="space-y-4"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {publications.map((pub) => (
-            <a
+            <motion.a
               key={pub.href}
+              variants={card}
               href={pub.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -38,9 +58,9 @@ export function PublicationsSection() {
               <span className="text-xs text-white/40 underline underline-offset-2 group-hover:text-white/60">
                 View on IEEE Xplore →
               </span>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </FadeIn>
     </section>
   );
