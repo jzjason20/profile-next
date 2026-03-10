@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jzxx.dev"),
   title: "Jacy — Creative Developer",
   description:
     "Portfolio of Jason (Jacy) — developer building experiments across web, ML, and creative technology. Shipping since 2019.",
