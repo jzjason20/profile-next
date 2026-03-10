@@ -12,6 +12,10 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
+const pageLinks = [
+  { label: "Now", href: "/now" },
+];
+
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -109,6 +113,15 @@ export function NavBar() {
                   </a>
                 );
               })}
+              {pageLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="rounded-full border border-white/20 px-3 py-0.5 text-xs text-white/60 transition hover:border-white/40 hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
 
             {/* Hamburger button */}
@@ -151,6 +164,16 @@ export function NavBar() {
                   </a>
                 );
               })}
+              {pageLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3 text-sm text-neutral-300 transition hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

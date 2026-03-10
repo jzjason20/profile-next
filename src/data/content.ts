@@ -156,6 +156,13 @@ export const publications = [
   },
 ];
 
+export const awards = [
+  { place: "2nd", event: "Human Pose Estimation", note: "+ internship offer" },
+  { place: "3rd", event: "Satellite Road Extraction (CNN + U-Net)" },
+  { place: "3rd", event: "Cancer Pain Prediction Platform" },
+  { place: "Top 5", event: "National Hackathon @ Google" },
+];
+
 export const contactContent = {
   message:
     "Need a teammate, an engineer who loves storytelling, or someone to jam on product ideas with? I'm just an email away.",
