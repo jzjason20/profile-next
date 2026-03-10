@@ -48,7 +48,7 @@ export function TimelineSection() {
                 initial={{ opacity: 0, x: -18 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" as const }}
               >
                 {/* Timeline dot */}
                 {isActualLast ? (
@@ -57,7 +57,7 @@ export function TimelineSection() {
                     initial={{ scale: 0.4, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    transition={{ duration: 0.3, ease: "easeOut" as const }}
                   >
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75" />
                     <span className="relative inline-flex h-4 w-4 rounded-full border-2 border-white bg-black shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
@@ -68,7 +68,7 @@ export function TimelineSection() {
                     initial={{ scale: 0.4, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    transition={{ duration: 0.25, ease: "easeOut" as const }}
                   />
                 )}
                 <p className="text-sm uppercase tracking-wide text-white/70">
