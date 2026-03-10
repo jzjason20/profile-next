@@ -4,8 +4,8 @@ import BlurText from "@/components/BlurText";
 import { FadeIn } from "@/components/FadeIn";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
 import { contactContent, heroContent } from "@/data/content";
-import { useLanyard, type DiscordStatus } from "@/hooks/useLanyard";
-import { ArrowRight, Github, Instagram, Mail } from "lucide-react";
+import { useLanyard, type Activity, type DiscordStatus } from "@/hooks/useLanyard";
+import { ArrowRight, ChevronLeft, ChevronRight, Github, Instagram, Mail } from "lucide-react";
 import { useState } from "react";
 
 // Spotify Icon
@@ -14,6 +14,47 @@ const SpotifyIcon = () => (
     <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
   </svg>
 );
+
+const CODING_APPS = new Set([
+  "visual studio code",
+  "code",
+  "intellij idea",
+  "webstorm",
+  "pycharm",
+  "goland",
+  "rider",
+  "clion",
+  "vim",
+  "neovim",
+  "nvim",
+  "xcode",
+  "android studio",
+  "sublime text",
+  "atom",
+  "emacs",
+]);
+
+function getActivityLabel(activity: Activity): string {
+  if (CODING_APPS.has(activity.name.toLowerCase())) return "coding";
+  if (activity.type === 1) return "streaming";
+  if (activity.type === 3) return "watching";
+  return "playing";
+}
+
+function getActivityImageUrl(activity: Activity): string | null {
+  const img = activity.assets?.large_image;
+  if (!img) return null;
+  if (img.startsWith("mp:external/")) {
+    const encoded = img.slice("mp:external/".length);
+    const parts = encoded.split("/");
+    if (parts.length > 1) return decodeURIComponent(parts.slice(1).join("/"));
+    return null;
+  }
+  if (activity.application_id) {
+    return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`;
+  }
+  return null;
+}
 
 // Discord Icon (Custom SVG)
 const DiscordIcon = ({ size = 22, className }: { size?: number; className?: string }) => (
@@ -46,6 +87,7 @@ const statusColor: Record<DiscordStatus, string> = {
 
 export function HeroSection() {
   const [copied, setCopied] = useState(false);
+  const [activeCard, setActiveCard] = useState(0);
   const lanyard = useLanyard();
 
   const handleCopy = (text: string) => {
@@ -98,32 +140,98 @@ export function HeroSection() {
             </a>
           </div>
         </FadeIn>
-        {/* Spotify now playing */}
-        {lanyard?.listening_to_spotify && lanyard.spotify && (
-          <div
-            className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
-            style={{ animation: "fadeIn 0.4s ease" }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={lanyard.spotify.album_art_url}
-              alt="album art"
-              className="h-8 w-8 shrink-0 rounded-sm"
-            />
-            <div className="min-w-0 text-left">
-              <p className="mb-0.5 flex items-center gap-1.5 text-xs text-white/40">
-                <SpotifyIcon />
-                listening now
-              </p>
-              <p className="max-w-[180px] truncate text-sm font-medium text-white/90">
-                {lanyard.spotify.song}
-              </p>
-              <p className="max-w-[180px] truncate text-xs text-white/50">
-                {lanyard.spotify.artist}
-              </p>
+        {/* Activity carousel */}
+        {lanyard && (() => {
+          type Card =
+            | { kind: "spotify" }
+            | { kind: "discord"; activity: Activity };
+
+          const cards: Card[] = [];
+          if (lanyard.listening_to_spotify && lanyard.spotify) cards.push({ kind: "spotify" });
+          const discordActivity = lanyard.activities.find((a) => a.type === 0 || a.type === 1 || a.type === 3);
+          if (discordActivity) cards.push({ kind: "discord", activity: discordActivity });
+
+          if (cards.length === 0) return null;
+
+          const idx = Math.min(activeCard, cards.length - 1);
+          const card = cards[idx];
+          const multi = cards.length > 1;
+
+          return (
+            <div className="flex items-center gap-2" style={{ animation: "fadeIn 0.4s ease" }}>
+              {multi && (
+                <button
+                  onClick={() => setActiveCard((idx - 1 + cards.length) % cards.length)}
+                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/40 transition hover:text-white/80"
+                >
+                  <ChevronLeft size={14} />
+                </button>
+              )}
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur-sm">
+                {card.kind === "spotify" && lanyard.spotify ? (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={lanyard.spotify.album_art_url}
+                      alt="album art"
+                      className="h-8 w-8 shrink-0 rounded"
+                    />
+                    <div className="min-w-0 text-left">
+                      <p className="mb-0.5 flex items-center gap-1.5 text-xs text-white/40">
+                        <SpotifyIcon />
+                        listening now
+                      </p>
+                      <p className="max-w-[180px] truncate text-sm font-medium text-white/90">
+                        {lanyard.spotify.song}
+                      </p>
+                      <p className="max-w-[180px] truncate text-xs text-white/50">
+                        {lanyard.spotify.artist}
+                      </p>
+                    </div>
+                  </>
+                ) : card.kind === "discord" ? (
+                  <>
+                    {(() => {
+                      const imgUrl = getActivityImageUrl(card.activity);
+                      return imgUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={imgUrl}
+                          alt={card.activity.assets?.large_text ?? card.activity.name}
+                          className="h-8 w-8 shrink-0 rounded object-cover"
+                        />
+                      ) : (
+                        <DiscordIcon size={16} className="shrink-0 text-white/40" />
+                      );
+                    })()}
+                    <div className="min-w-0 text-left">
+                      <p className="mb-0.5 flex items-center gap-1.5 text-xs text-white/40">
+                        <DiscordIcon size={10} />
+                        {getActivityLabel(card.activity)}
+                      </p>
+                      <p className="max-w-[180px] truncate text-sm font-medium text-white/90">
+                        {card.activity.name}
+                      </p>
+                      {card.activity.details && (
+                        <p className="max-w-[180px] truncate text-xs text-white/50">
+                          {card.activity.details}
+                        </p>
+                      )}
+                    </div>
+                  </>
+                ) : null}
+              </div>
+              {multi && (
+                <button
+                  onClick={() => setActiveCard((idx + 1) % cards.length)}
+                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/40 transition hover:text-white/80"
+                >
+                  <ChevronRight size={14} />
+                </button>
+              )}
             </div>
-          </div>
-        )}
+          );
+        })()}
 
         <FadeIn delay={1000}>
           <div className="flex items-center gap-6 text-white/70">
