@@ -1,9 +1,9 @@
 "use client";
 
 import DotGrid from "@/components/DotGrid";
+import { FadeIn } from "@/components/FadeIn";
 import { contactContent } from "@/data/content";
 import { ArrowRight } from "lucide-react";
-
 import { useState } from "react";
 
 
@@ -30,7 +30,7 @@ export function ContactSection() {
         activeColor="#f5f5f5"
         proximity={150}
       />
-      <div className="relative z-10 mx-auto max-w-4xl rounded-3xl border border-white/5 bg-black/60 p-10 text-center">
+      <FadeIn className="relative z-10 mx-auto max-w-4xl rounded-3xl border border-white/5 bg-black/60 p-10 text-center">
         <p className="text-sm uppercase tracking-[0.3em] text-white/50">
           Contact
         </p>
@@ -38,45 +38,49 @@ export function ContactSection() {
           Let’s build or brainstorm
         </h2>
         <p className="mt-4 text-white/70">{contactContent.message}</p>
-        <a
-          href={contactContent.email}
-          className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-black transition hover:bg-white/90"
-        >
-          Say hi
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </a>
-        <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/60">
-          {contactContent.socials.map((link) => {
-            if (link.label === "Discord") {
+        <FadeIn delay={200}>
+          <a
+            href={contactContent.email}
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-black transition hover:bg-white/90"
+          >
+            Say hi
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
+        </FadeIn>
+        <FadeIn delay={350}>
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/60">
+            {contactContent.socials.map((link) => {
+              if (link.label === "Discord") {
+                return (
+                  <button
+                    key={link.label}
+                    onClick={() => handleCopy(link.href)}
+                    className="relative transition hover:text-white"
+                  >
+                    {link.label}
+                    {copied && (
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-white px-2 py-1 text-xs font-bold text-black opacity-100 transition-opacity">
+                        Copied!
+                      </span>
+                    )}
+                  </button>
+                );
+              }
               return (
-                <button
+                <a
                   key={link.label}
-                  onClick={() => handleCopy(link.href)}
-                  className="relative transition hover:text-white"
+                  href={link.href}
+                  className="transition hover:text-white"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {link.label}
-                  {copied && (
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-white px-2 py-1 text-xs font-bold text-black opacity-100 transition-opacity">
-                      Copied!
-                    </span>
-                  )}
-                </button>
+                </a>
               );
-            }
-            return (
-              <a
-                key={link.label}
-                href={link.href}
-                className="transition hover:text-white"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link.label}
-              </a>
-            );
-          })}
-        </div>
-      </div>
+            })}
+          </div>
+        </FadeIn>
+      </FadeIn>
     </section>
   );
 }

@@ -1,6 +1,8 @@
+import { AnimatedCodeLines } from "@/components/AnimatedCodeLines";
 import DotGrid from "@/components/DotGrid";
 import { FadeIn } from "@/components/FadeIn";
 import SpotlightCard from "@/components/SpotlightCard";
+import { StaggerTags } from "@/components/StaggerTags";
 import { aboutContent } from "@/data/content";
 
 const codeLines = [
@@ -51,11 +53,7 @@ export function AboutSection() {
               <span className="h-3 w-3 rounded-full bg-green-400" />
             </div>
             <div className="max-h-80 overflow-auto pr-2 sm:max-h-96 lg:max-h-none">
-              <pre className="min-w-full space-y-2 font-mono text-sm leading-relaxed text-white/80 whitespace-pre-wrap">
-                {codeLines.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
-              </pre>
+              <AnimatedCodeLines lines={codeLines} />
             </div>
           </SpotlightCard>
           <div className="space-y-6">
@@ -64,32 +62,14 @@ export function AboutSection() {
               <p className="mt-2 text-white/70">
                 Tools, languages, and frameworks I keep reaching for.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {aboutContent.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/70"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+              <StaggerTags tags={aboutContent.skills} variant="bordered" />
             </SpotlightCard>
             <SpotlightCard>
               <h3 className="text-xl font-semibold">When I disconnect</h3>
               <p className="mt-2 text-white/70">
                 Still finding signals in the noise.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {aboutContent.hobbies.map((hobby) => (
-                  <span
-                    key={hobby}
-                    className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/70"
-                  >
-                    {hobby}
-                  </span>
-                ))}
-              </div>
+              <StaggerTags tags={aboutContent.hobbies} variant="filled" />
               <a
                 href={aboutContent.blogUrl}
                 target="_blank"

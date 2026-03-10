@@ -4,7 +4,18 @@ import DotGrid from "@/components/DotGrid";
 import { FadeIn } from "@/components/FadeIn";
 import MagicBento, { type BentoCardProps } from "@/components/MagicBento";
 import { projects } from "@/data/content";
+import { motion } from "motion/react";
 import { useState } from "react";
+
+const tagContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.04 } },
+};
+
+const tagItem = {
+  hidden: { opacity: 0, y: 6 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } },
+};
 
 const STATUS_COLORS: Record<string, string> = {
   Live: "#22c55e",
@@ -63,10 +74,17 @@ export function ProjectsSection() {
         </div>
 
         {/* Filter tags */}
-        <div className="flex flex-wrap justify-center gap-2">
+        <motion.div
+          className="flex flex-wrap justify-center gap-2"
+          variants={tagContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+        >
           {ALL_TAGS.map((tag) => (
-            <button
+            <motion.button
               key={tag}
+              variants={tagItem}
               onClick={() => setActiveTag(tag)}
               className={`rounded-full border px-4 py-1.5 text-sm transition-all duration-200 ${
                 activeTag === tag
@@ -75,9 +93,9 @@ export function ProjectsSection() {
               }`}
             >
               {tag}
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         <div className="flex justify-center">
           <MagicBento
