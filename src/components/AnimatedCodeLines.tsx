@@ -10,7 +10,7 @@ const container = {
 
 const line = {
   hidden: { opacity: 0, x: -10 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  show: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" as const } },
 };
 
 export function AnimatedCodeLines({ lines }: { lines: string[] }) {

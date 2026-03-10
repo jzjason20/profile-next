@@ -14,7 +14,7 @@ const tagContainer = {
 
 const tagItem = {
   hidden: { opacity: 0, y: 6 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" as const } },
 };
 
 const STATUS_COLORS: Record<string, string> = {
