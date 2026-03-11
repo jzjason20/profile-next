@@ -13,7 +13,11 @@ const codeLines = [
   `        self.age = ${aboutContent.age}`,
   `        self.about = "${aboutContent.summary}"`,
   "    def skills(self):",
-  `        return ${JSON.stringify(aboutContent.skills)}`,
+  "        return {",
+  ...aboutContent.skillCategories.map(
+    (cat) => `            "${cat.label}": ${JSON.stringify(cat.items)},`
+  ),
+  "        }",
   "    def hobbies(self):",
   `        blog = "${aboutContent.blogUrl}"`,
   `        return ${JSON.stringify(aboutContent.hobbies)}`,
@@ -62,7 +66,16 @@ export function AboutSection() {
               <p className="mt-2 text-white/70">
                 Tools, languages, and frameworks I keep reaching for.
               </p>
-              <StaggerTags tags={aboutContent.skills} variant="bordered" />
+              <div className="mt-4 space-y-4">
+                {aboutContent.skillCategories.map((cat) => (
+                  <div key={cat.label}>
+                    <p className="mb-2 text-xs uppercase tracking-[0.2em] text-white/40">
+                      {cat.label}
+                    </p>
+                    <StaggerTags tags={cat.items} variant="bordered" />
+                  </div>
+                ))}
+              </div>
             </SpotlightCard>
             <SpotlightCard>
               <h3 className="text-xl font-semibold">When I disconnect</h3>

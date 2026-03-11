@@ -50,9 +50,14 @@ export function PublicationsSection() {
                 <h3 className="text-lg font-semibold leading-snug group-hover:text-white/90">
                   {pub.title}
                 </h3>
-                <span className="w-fit shrink-0 rounded-full border border-white/20 px-3 py-0.5 text-xs text-white/60">
-                  {pub.venue} · {pub.year}
-                </span>
+                <div className="flex w-fit shrink-0 flex-col items-start gap-1 sm:items-end">
+                  <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-3 py-0.5 text-xs font-medium text-blue-300">
+                    {pub.venue} Publication
+                  </span>
+                  <span className="text-xs text-white/40">
+                    Peer-reviewed · {pub.year}
+                  </span>
+                </div>
               </div>
               <p className="text-sm text-white/60">{pub.description}</p>
               <span className="text-xs text-white/40 underline underline-offset-2 group-hover:text-white/60">

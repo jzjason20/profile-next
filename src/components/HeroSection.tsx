@@ -179,13 +179,17 @@ export function HeroSection() {
                 <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur-sm">
                   {card.kind === "spotify" && lanyard.spotify ? (
                     <>
-                      <Image
-                        src={lanyard.spotify.album_art_url}
-                        alt={`Album art for ${lanyard.spotify.song} by ${lanyard.spotify.artist}`}
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 shrink-0 rounded"
-                      />
+                      {lanyard.spotify.album_art_url ? (
+                        <Image
+                          src={lanyard.spotify.album_art_url}
+                          alt={`Album art for ${lanyard.spotify.song} by ${lanyard.spotify.artist}`}
+                          width={32}
+                          height={32}
+                          className="h-8 w-8 shrink-0 rounded"
+                        />
+                      ) : (
+                        <SpotifyIcon className="h-8 w-8 shrink-0 text-green-400" />
+                      )}
                       <div className="min-w-0 text-left">
                         <p className="mb-0.5 flex items-center gap-1.5 text-xs text-white/40">
                           <SpotifyIcon />

@@ -5,6 +5,7 @@ export interface Project {
   status: "Work" | "Live" | "Research" | "Clinical";
   tags: string[];
   active: boolean;
+  featured?: boolean;
 }
 
 export interface TimelineItem {
@@ -39,11 +40,16 @@ export interface NowProject {
   status: string;
 }
 
+export interface SkillCategory {
+  label: string;
+  items: string[];
+}
+
 export const heroContent = {
   name: "Jacy",
-  title: "Curious developer building playful products",
+  title: "AI engineer building playful, experimental products.",
   description:
-    "I design and code hands-on experiments across web, machine learning, and creative technology — always shipping something new to learn from.",
+    "Most projects live somewhere between machine learning, product design, and weird ideas worth trying.",
   primaryCta: { label: "See projects", href: "#projects" },
   secondaryCta: { label: "View timeline", href: "#timeline" },
 };
@@ -52,20 +58,21 @@ export const aboutContent = {
   realName: "Jason",
   age: 20,
   summary:
-    "Hey, I'm a curious guy who loves learning new things by getting hands-on with the code. I split time between ML research, product experiments, and tinkering with UI.",
-  skills: [
-    "HTML/CSS",
-    "JavaScript",
-    "Python",
-    "Flutter/Dart",
-    "React",
-    "Bootstrap",
-    "Git",
-    "UI/UX",
-    "TensorFlow",
-    "OpenCV",
-    "scikit-learn",
-  ],
+    "Hey. I learn by building things and breaking them. Most of my time goes into ML research, product experiments, and occasionally obsessing over small UI details.",
+  skillCategories: [
+    {
+      label: "Core",
+      items: ["Python", "TensorFlow", "OpenCV", "scikit-learn"],
+    },
+    {
+      label: "Product / Web",
+      items: ["JavaScript", "React", "Flutter/Dart"],
+    },
+    {
+      label: "Tools",
+      items: ["Git", "Bootstrap", "UI/UX", "HTML/CSS"],
+    },
+  ] as SkillCategory[],
   hobbies: ["Coding", "Reading", "Sports", "Gaming", "Listening to music"],
   blogUrl: "https://jacyjason.substack.com/",
   blogTitle: "Check out my substack",
@@ -75,7 +82,7 @@ export const projects: Project[] = [
   {
     title: "AskLexy",
     description:
-      "Developer at AskLexy. AI-powered learning and career prep platform.",
+      "Multi-agent AI learning platform with conversational tutoring and developer-focused career preparation tools.",
     href: "https://asklexy.me",
     status: "Work",
     tags: ["AI", "Web"],
@@ -84,7 +91,7 @@ export const projects: Project[] = [
   {
     title: "LifeXP",
     description:
-      "A gamified way to track life experiences and skill progression.",
+      "Gamified life operating system turning habits, learning, and social activity into RPG-style progression.",
     href: "https://lifexp.live",
     status: "Live",
     tags: ["App", "Web"],
@@ -93,7 +100,7 @@ export const projects: Project[] = [
   {
     title: "Bodhimaram",
     description:
-      "Custom WordPress site helping a playschool manage admissions, events, and storytelling.",
+      "Custom WordPress platform helping a playschool manage admissions, parents, and communication workflows.",
     href: "https://bodhimaram.in/",
     status: "Live",
     tags: ["Web"],
@@ -107,11 +114,12 @@ export const projects: Project[] = [
     status: "Research",
     tags: ["AI", "Research"],
     active: false,
+    featured: true,
   },
   {
     title: "solarVert",
     description:
-      "Dashboard that helps solar panel owners monitor uptime, faults, and maintenance queues.",
+      "Energy monitoring dashboard for solar panel operators to track uptime, detect faults, and analyze output in real time.",
     href: "https://github.com/jzjason20/solarVert",
     status: "Live",
     tags: ["App", "Web"],
@@ -129,7 +137,11 @@ export const projects: Project[] = [
 ];
 
 export const timeline: TimelineItem[] = [
-  { date: "August 2017", detail: "Started coding in C and Python." },
+  {
+    date: "August 2017",
+    detail:
+      "Started experimenting with C and Python. Quickly discovered that building things with code was addictive.",
+  },
   {
     date: "May 2019",
     detail:
@@ -192,7 +204,7 @@ export const publications: Publication[] = [
   {
     title: "ENDCL: Attention-Enhanced CNN-BiLSTM",
     description:
-      "Automated cardiovascular disease detection model combining CNN, BiLSTM, and attention mechanisms. Published at IEEE.",
+      "Automated cardiovascular disease detection model combining CNN, BiLSTM, and attention mechanisms. Peer-reviewed and published at IEEE.",
     href: "https://ieeexplore.ieee.org/abstract/document/11376121",
     venue: "IEEE",
     year: "Dec 2025",
@@ -239,13 +251,13 @@ export const nowContent = {
       name: "LifeXP",
       href: "https://lifexp.live",
       description:
-        "Gamified life experience tracker. Iterating on the progression system and data visualisations.",
+        "Gamified life operating system. Currently iterating on progression mechanics and data visualization.",
       status: "Active",
     },
   ] as NowProject[],
   reading: [
     "The Pragmatic Programmer — Hunt & Thomas",
-    "The Design of Everyday Things — Don Norman",
+    "Designing Data-Intensive Applications — Martin Kleppmann",
   ],
   obsessed: [
     "Agentic AI workflows and how far you can push tool-use",
