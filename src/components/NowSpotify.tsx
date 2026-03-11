@@ -41,9 +41,12 @@ export function NowSpotify() {
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <p className="mb-1 flex items-center gap-1.5 text-xs text-emerald-400">
-              <SpotifyIcon size={12} />
-              Now playing
+            <p className="mb-1 flex items-center gap-2 text-xs text-emerald-400">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              Listening to
             </p>
             <p className="truncate font-semibold text-white group-hover:text-white/90">
               {spotify.song}
@@ -53,9 +56,7 @@ export function NowSpotify() {
           </div>
         </a>
       ) : (
-        <p className="text-sm text-white/30">
-          Not listening right now — probably F1 podcasts or ambient coding music.
-        </p>
+        <p className="text-sm text-white/30">Not listening to Spotify</p>
       )}
     </div>
   );
