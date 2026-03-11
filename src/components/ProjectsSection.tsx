@@ -73,6 +73,44 @@ export function ProjectsSection() {
           </p>
         </div>
 
+        {/* Featured project */}
+        {(() => {
+          const featured = projects.find((p) => p.featured);
+          if (!featured) return null;
+          return (
+            <a
+              href={featured.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-6 transition-all duration-300 hover:border-white/25 hover:bg-white/8 sm:p-8"
+            >
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs uppercase tracking-[0.25em] text-white/40">
+                    Featured Project
+                  </span>
+                  <span
+                    className="rounded-full border px-2 py-0.5 text-xs"
+                    style={{
+                      borderColor: `${STATUS_COLORS[featured.status]}40`,
+                      color: STATUS_COLORS[featured.status],
+                    }}
+                  >
+                    {featured.status}
+                  </span>
+                </div>
+                <h3 className="text-2xl font-bold transition group-hover:text-white/90 sm:text-3xl">
+                  {featured.title}
+                </h3>
+                <p className="max-w-2xl text-white/60">{featured.description}</p>
+                <span className="text-xs text-white/40 underline underline-offset-2 transition group-hover:text-white/60">
+                  View project →
+                </span>
+              </div>
+            </a>
+          );
+        })()}
+
         {/* Filter tags */}
         <motion.div
           className="flex flex-wrap justify-center gap-2"

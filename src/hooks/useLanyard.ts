@@ -85,10 +85,46 @@ export function useLanyard(): LanyardData | null {
             // INIT_STATE or PRESENCE_UPDATE
             reconnectAttempts = 0;
             const d = msg.d;
+
+            let isListening: boolean = d.listening_to_spotify;
+            let spotifyData: LanyardData["spotify"] = d.spotify ?? null;
+
+            // Fallback: mobile Spotify shows as a type-2 activity rather than
+            // populating listening_to_spotify / spotify fields.
+            if (!isListening) {
+              const spotifyActivity = (d.activities ?? []).find(
+                (a: Activity) => a.type === 2 && a.name === "Spotify",
+              );
+              if (spotifyActivity) {
+                isListening = true;
+                let albumArtUrl = "";
+                const largeImage = spotifyActivity.assets?.large_image ?? "";
+                if (largeImage.startsWith("spotify:")) {
+                  albumArtUrl = `https://i.scdn.co/image/${largeImage.slice("spotify:".length)}`;
+                } else if (largeImage.startsWith("mp:external/")) {
+                  const encoded = largeImage.slice("mp:external/".length);
+                  const parts = encoded.split("/");
+                  if (parts.length > 1)
+                    albumArtUrl = decodeURIComponent(parts.slice(1).join("/"));
+                }
+                spotifyData = {
+                  song: spotifyActivity.details ?? "",
+                  artist: spotifyActivity.state ?? "",
+                  album: spotifyActivity.assets?.large_text ?? "",
+                  album_art_url: albumArtUrl,
+                  track_id: "",
+                  timestamps: {
+                    start: spotifyActivity.timestamps?.start ?? 0,
+                    end: spotifyActivity.timestamps?.end ?? 0,
+                  },
+                };
+              }
+            }
+
             setData({
               discord_status: d.discord_status,
-              listening_to_spotify: d.listening_to_spotify,
-              spotify: d.spotify ?? null,
+              listening_to_spotify: isListening,
+              spotify: spotifyData,
               activities: d.activities ?? [],
             });
           }
