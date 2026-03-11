@@ -45,37 +45,49 @@ export interface SkillCategory {
   items: string[];
 }
 
+export interface CapabilitySignal {
+  area: string;
+  tools: string[];
+}
+
 export const heroContent = {
   name: "Jacy",
-  title: "AI engineer building playful, experimental products.",
+  title: "AI engineer shipping useful chaos.",
   description:
-    "Most projects live somewhere between machine learning, product design, and weird ideas worth trying.",
+    "I build ML-flavored products, break them responsibly, then ship the least cursed version.",
   primaryCta: { label: "See projects", href: "#projects" },
-  secondaryCta: { label: "View timeline", href: "#timeline" },
+  secondaryCta: { label: "Read the lore", href: "#timeline" },
 };
 
 export const aboutContent = {
   realName: "Jason",
   age: 20,
   summary:
-    "Hey. I learn by building things and breaking them. Most of my time goes into ML research, product experiments, and occasionally obsessing over small UI details.",
-  skillCategories: [
+    "I learn by shipping things, snapping things, and then pretending that was part of the plan.",
+  capabilityMap: [
     {
-      label: "Core",
-      items: ["Python", "TensorFlow", "OpenCV", "scikit-learn"],
+      area: "Backend + API Systems",
+      tools: ["Python", "Django", "FastAPI", "PostgreSQL", "Redis", "Docker"],
     },
     {
-      label: "Product / Web",
-      items: ["JavaScript", "React", "Flutter/Dart"],
+      area: "Applied ML",
+      tools: ["PyTorch", "TensorFlow", "scikit-learn", "OpenCV"],
     },
     {
-      label: "Tools",
-      items: ["Git", "Bootstrap", "UI/UX", "HTML/CSS"],
+      area: "Product / Frontend",
+      tools: ["Next.js", "React", "Flutter", "TypeScript", "Tailwind"],
     },
-  ] as SkillCategory[],
-  hobbies: ["Coding", "Reading", "Sports", "Gaming", "Listening to music"],
+  ] as CapabilitySignal[],
+  hobbies: [
+    "Coding",
+    "Reading",
+    "Sports",
+    "F1",
+    "Gaming",
+    "Listening to music",
+  ],
   blogUrl: "https://jacyjason.substack.com/",
-  blogTitle: "Check out my substack",
+  blogTitle: "Read my mildly unhinged build logs",
 };
 
 export const projects: Project[] = [

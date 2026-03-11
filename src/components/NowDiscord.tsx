@@ -4,6 +4,10 @@ import { DiscordIcon } from "@/components/icons";
 import { useLanyard, type Activity } from "@/hooks/useLanyard";
 import Image from "next/image";
 
+interface NowDiscordProps {
+  compact?: boolean;
+}
+
 const CODING_APPS = new Set([
   "visual studio code",
   "code",
@@ -54,7 +58,7 @@ function getActivityImageUrl(activity: Activity): string | null {
   return null;
 }
 
-export function NowDiscord() {
+export function NowDiscord({ compact = false }: NowDiscordProps) {
   const lanyard = useLanyard();
 
   if (!lanyard) return null;
@@ -78,20 +82,22 @@ export function NowDiscord() {
               <Image
                 src={imageUrl}
                 alt={activity.assets?.large_text ?? activity.name}
-                width={56}
-                height={56}
-                className="h-14 w-14 shrink-0 rounded-md object-cover"
+                width={compact ? 44 : 56}
+                height={compact ? 44 : 56}
+                className={`${compact ? "h-11 w-11" : "h-14 w-14"} shrink-0 rounded-md object-cover`}
               />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={imageUrl}
                 alt={activity.assets?.large_text ?? activity.name}
-                className="h-14 w-14 shrink-0 rounded-md object-cover"
+                className={`${compact ? "h-11 w-11" : "h-14 w-14"} shrink-0 rounded-md object-cover`}
               />
             )
           ) : (
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-white/10 text-white/40">
+            <div
+              className={`${compact ? "h-11 w-11" : "h-14 w-14"} flex shrink-0 items-center justify-center rounded-md bg-white/10 text-white/40`}
+            >
               <DiscordIcon size={12} />
             </div>
           )}

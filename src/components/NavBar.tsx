@@ -80,7 +80,7 @@ export function NavBar() {
     <>
       {/* Scroll progress bar */}
       <div
-        className="fixed left-0 top-0 z-[60] h-[2px] bg-white/60 transition-[width] duration-75"
+        className="fixed left-0 top-0 z-60 h-0.5 bg-white/60 transition-[width] duration-75"
         style={{ width: `${scrollProgress}%` }}
       />
 
@@ -118,7 +118,7 @@ export function NavBar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-indicator"
-                        className="mt-0.5 block h-[2px] rounded-full bg-white"
+                        className="mt-0.5 block h-0.5 rounded-full bg-white"
                         transition={{
                           type: "spring",
                           stiffness: 380,

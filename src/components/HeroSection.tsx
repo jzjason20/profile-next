@@ -4,7 +4,7 @@ import BlurText from "@/components/BlurText";
 import { FadeIn } from "@/components/FadeIn";
 import { DiscordIcon, SpotifyIcon } from "@/components/icons";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
-import { contactContent, heroContent } from "@/data/content";
+import { awards, contactContent, heroContent } from "@/data/content";
 import {
   useLanyard,
   type Activity,
@@ -80,6 +80,13 @@ const statusColor: Record<DiscordStatus, string> = {
   offline: "bg-zinc-500",
 };
 
+const awardTone: Record<string, string> = {
+  "1st": "border-yellow-300/40 bg-yellow-300/12 text-yellow-100",
+  "2nd": "border-sky-300/40 bg-sky-300/12 text-sky-100",
+  "3rd": "border-orange-300/40 bg-orange-300/12 text-orange-100",
+  "Top 5": "border-emerald-300/40 bg-emerald-300/12 text-emerald-100",
+};
+
 export function HeroSection() {
   const [copied, setCopied] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
@@ -119,22 +126,49 @@ export function HeroSection() {
           </p>
         </FadeIn>
         <FadeIn delay={800}>
-          <div className="flex flex-col gap-4 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href={heroContent.primaryCta.href}
-              className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-black transition hover:bg-white/90"
+              className="group inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-black transition hover:bg-white/90"
             >
               {heroContent.primaryCta.label}
               <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
             </a>
             <a
               href={heroContent.secondaryCta.href}
-              className="rounded-full border border-white/20 px-8 py-3 text-white transition hover:border-white/60"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm text-white/75 transition hover:border-white/50 hover:text-white"
             >
               {heroContent.secondaryCta.label}
             </a>
           </div>
         </FadeIn>
+
+        <FadeIn delay={900}>
+          <div className="w-full max-w-4xl rounded-2xl border border-white/10 bg-white/3 p-3 backdrop-blur-sm sm:p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:mb-3">
+              Battle-tested in hackathons and minor sleep deprivation
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              {awards.map((award) => (
+                <span
+                  key={`${award.place}-${award.event}`}
+                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs ${awardTone[award.place] ?? "border-white/20 bg-white/5 text-white/80"}`}
+                >
+                  <span className="font-semibold tracking-wide">
+                    {award.place}
+                  </span>
+                  <span className="text-white/70">{award.event}</span>
+                  {award.note ? (
+                    <span className="text-[11px] text-white/55">
+                      {award.note}
+                    </span>
+                  ) : null}
+                </span>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
         {/* Activity carousel */}
         {lanyard &&
           (() => {

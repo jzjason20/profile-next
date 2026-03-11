@@ -4,13 +4,8 @@ import DotGrid from "@/components/DotGrid";
 import { FadeIn } from "@/components/FadeIn";
 import { timeline } from "@/data/content";
 import { motion } from "motion/react";
-import { useState } from "react";
-
-const INITIAL_COUNT = 6;
 
 export function TimelineSection() {
-  const [showAll, setShowAll] = useState(false);
-  const visible = showAll ? timeline : timeline.slice(0, INITIAL_COUNT);
   const lastIndex = timeline.length - 1;
 
   return (
@@ -32,15 +27,12 @@ export function TimelineSection() {
             Timeline
           </p>
           <h2 className="mt-4 text-3xl font-bold sm:text-5xl">
-            Moments that shaped my curiosity
+            Full lore, zero cliffhanger
           </h2>
         </div>
         <div className="mt-16 space-y-12 border-l border-white/10 pl-8">
-          {visible.map((item, index) => {
-            const isLast =
-              index ===
-              (showAll ? lastIndex : Math.min(INITIAL_COUNT - 1, lastIndex));
-            const isActualLast = timeline.indexOf(item) === lastIndex;
+          {timeline.map((item, index) => {
+            const isActualLast = index === lastIndex;
 
             return (
               <motion.div
@@ -91,19 +83,6 @@ export function TimelineSection() {
             );
           })}
         </div>
-
-        {timeline.length > INITIAL_COUNT && (
-          <div className="mt-10 flex justify-center">
-            <button
-              onClick={() => setShowAll((prev) => !prev)}
-              className="rounded-full border border-white/20 px-6 py-2 text-sm text-white/60 transition hover:border-white/40 hover:text-white"
-            >
-              {showAll
-                ? "Show less"
-                : `Show ${timeline.length - INITIAL_COUNT} more`}
-            </button>
-          </div>
-        )}
       </FadeIn>
     </section>
   );

@@ -1,5 +1,4 @@
 import { AboutSection } from "@/components/AboutSection";
-import { AwardsSection } from "@/components/AwardsSection";
 import { BlogSection } from "@/components/BlogSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
@@ -18,7 +17,6 @@ export default function Home() {
         <Lanyard className="h-full w-full" />
       </div>
       <HeroSection />
-      <AwardsSection />
       <AboutSection />
       <ProjectsSection />
       <PublicationsSection />

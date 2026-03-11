@@ -4,7 +4,11 @@ import { SpotifyIcon } from "@/components/icons";
 import { useLanyard } from "@/hooks/useLanyard";
 import Image from "next/image";
 
-export function NowSpotify() {
+interface NowSpotifyProps {
+  compact?: boolean;
+}
+
+export function NowSpotify({ compact = false }: NowSpotifyProps) {
   const lanyard = useLanyard();
 
   if (!lanyard) return null;
@@ -31,12 +35,14 @@ export function NowSpotify() {
             <Image
               src={spotify.album_art_url}
               alt={`Album art for ${spotify.song} by ${spotify.artist}`}
-              width={56}
-              height={56}
-              className="h-14 w-14 shrink-0 rounded-md"
+              width={compact ? 44 : 56}
+              height={compact ? 44 : 56}
+              className={`${compact ? "h-11 w-11" : "h-14 w-14"} shrink-0 rounded-md`}
             />
           ) : (
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-white/10">
+            <div
+              className={`${compact ? "h-11 w-11" : "h-14 w-14"} flex shrink-0 items-center justify-center rounded-md bg-white/10`}
+            >
               <SpotifyIcon size={24} />
             </div>
           )}
