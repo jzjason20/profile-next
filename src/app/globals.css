@@ -105,6 +105,22 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, 40px) scale(1.05); }
+  66% { transform: translate(-30px, 70px) scale(0.95); }
+}
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-80px, 50px) scale(1.08); }
+  66% { transform: translate(40px, -60px) scale(0.92); }
+}
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -40px) scale(1.06); }
+  66% { transform: translate(-60px, 30px) scale(0.96); }
+}
+
 @layer base {
   * {
     border-color: var(--border);

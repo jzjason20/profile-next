@@ -8,8 +8,16 @@ const { building, reading, obsessed, lastUpdated } = nowContent;
 
 export default function NowPage() {
   return (
-    <main className="min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-2xl px-6 py-20 space-y-16">
+    <main className="relative min-h-screen text-white overflow-hidden">
+      {/* Background orbs */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="absolute -top-32 -left-32 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[120px] animate-[drift1_18s_ease-in-out_infinite]" />
+        <div className="absolute top-1/3 -right-48 h-[400px] w-[400px] rounded-full bg-violet-500/8 blur-[100px] animate-[drift2_22s_ease-in-out_infinite]" />
+        <div className="absolute bottom-0 left-1/4 h-[350px] w-[350px] rounded-full bg-sky-500/6 blur-[100px] animate-[drift3_26s_ease-in-out_infinite]" />
+      </div>
+
+
+<div className="relative z-10 mx-auto max-w-2xl px-6 py-20 space-y-16">
         {/* Back */}
         <Link
           href="/"
