@@ -20,6 +20,7 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import {
   Component,
   type ErrorInfo,
+  type JSX,
   type ReactNode,
   useEffect,
   useRef,
