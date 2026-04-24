@@ -90,7 +90,7 @@ export function AnimatedCodeLines({
   showCursor?: boolean;
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const inView = useInView(ref, { once: true, amount: 0 });
   const highlighted = useMemo(
     () => lines.map((lineText) => highlightLine(lineText)),
     [lines],
