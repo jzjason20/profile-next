@@ -39,15 +39,9 @@ function getActivityImageUrl(activity: Activity): string | null {
   if (!img) return null;
 
   // External image proxied through Discord's media proxy
+  // Use media.discordapp.net directly — it understands the mp:external/ path format
   if (img.startsWith("mp:external/")) {
-    const encoded = img.slice("mp:external/".length);
-    // The URL is base64-like encoded after the hash segment
-    const parts = encoded.split("/");
-    // Reconstruct: everything after the first path segment is the external URL
-    if (parts.length > 1) {
-      return decodeURIComponent(parts.slice(1).join("/"));
-    }
-    return null;
+    return `https://media.discordapp.net/${img.replace(/^mp:/, "")}`;
   }
 
   // Standard application asset

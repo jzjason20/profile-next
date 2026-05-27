@@ -52,10 +52,7 @@ function getActivityImageUrl(activity: Activity): string | null {
   const img = activity.assets?.large_image;
   if (!img) return null;
   if (img.startsWith("mp:external/")) {
-    const encoded = img.slice("mp:external/".length);
-    const parts = encoded.split("/");
-    if (parts.length > 1) return decodeURIComponent(parts.slice(1).join("/"));
-    return null;
+    return `https://media.discordapp.net/${img.replace(/^mp:/, "")}`;
   }
   if (activity.application_id) {
     return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`;
