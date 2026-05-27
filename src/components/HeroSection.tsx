@@ -10,6 +10,7 @@ import {
   type Activity,
   type DiscordStatus,
 } from "@/hooks/useLanyard";
+import { useSpotify } from "@/hooks/useSpotify";
 import {
   ArrowRight,
   ChevronLeft,
@@ -91,6 +92,7 @@ export function HeroSection() {
   const [copied, setCopied] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const lanyard = useLanyard();
+  const spotify = useSpotify();
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -170,16 +172,15 @@ export function HeroSection() {
         </FadeIn>
 
         {/* Activity carousel */}
-        {lanyard &&
+        {(lanyard ?? spotify) &&
           (() => {
             type Card =
               | { kind: "spotify" }
               | { kind: "discord"; activity: Activity };
 
             const cards: Card[] = [];
-            if (lanyard.listening_to_spotify && lanyard.spotify)
-              cards.push({ kind: "spotify" });
-            const discordActivity = lanyard.activities.find(
+            if (spotify?.isPlaying) cards.push({ kind: "spotify" });
+            const discordActivity = lanyard?.activities.find(
               (a) => a.type === 0 || a.type === 1 || a.type === 3,
             );
             if (discordActivity)
@@ -211,12 +212,12 @@ export function HeroSection() {
                   </button>
                 )}
                 <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur-sm">
-                  {card.kind === "spotify" && lanyard.spotify ? (
+                  {card.kind === "spotify" && spotify?.isPlaying ? (
                     <>
-                      {lanyard.spotify.album_art_url ? (
+                      {spotify.albumArtUrl ? (
                         <Image
-                          src={lanyard.spotify.album_art_url}
-                          alt={`Album art for ${lanyard.spotify.song} by ${lanyard.spotify.artist}`}
+                          src={spotify.albumArtUrl}
+                          alt={`Album art for ${spotify.title} by ${spotify.artist}`}
                           width={32}
                           height={32}
                           className="h-8 w-8 shrink-0 rounded"
@@ -230,10 +231,10 @@ export function HeroSection() {
                           listening now
                         </p>
                         <p className="max-w-[180px] truncate text-sm font-medium text-white/90">
-                          {lanyard.spotify.song}
+                          {spotify.title}
                         </p>
                         <p className="max-w-[180px] truncate text-xs text-white/50">
-                          {lanyard.spotify.artist}
+                          {spotify.artist}
                         </p>
                       </div>
                     </>
