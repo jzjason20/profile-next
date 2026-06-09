@@ -238,7 +238,7 @@ export const contactContent = {
     { label: "GitHub", href: "https://github.com/jzxx26" },
     { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
     { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
-    { label: "Discord", href: "jacyjason20" },
+    { label: "Discord", href: "jzxx26" },
   ] as SocialLink[],
 };
 
@@ -246,7 +246,7 @@ export const socialLinks: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/jzxx26" },
   { label: "Instagram", href: "https://www.instagram.com/jazjason20/" },
   { label: "Email", href: "mailto:jazjasonlee@gmail.com" },
-  { label: "Discord", href: "jacyjason20" },
+  { label: "Discord", href: "jzxx26" },
 ];
 
 export const nowContent = {
