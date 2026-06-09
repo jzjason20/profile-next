@@ -16,8 +16,7 @@ export default function NowPage() {
         <div className="absolute bottom-0 left-1/4 h-[350px] w-[350px] rounded-full bg-sky-500/6 blur-[100px] animate-[drift3_26s_ease-in-out_infinite]" />
       </div>
 
-
-<div className="relative z-10 mx-auto max-w-2xl px-6 py-20 space-y-16">
+      <div className="relative z-10 mx-auto max-w-2xl px-6 py-20 space-y-16">
         {/* Back */}
         <Link
           href="/"
@@ -84,13 +83,13 @@ export default function NowPage() {
           <div className="overflow-hidden rounded-2xl border border-white/10 p-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://ghchart.rshah.org/jzjason20"
-              alt="jzjason20 GitHub contribution graph"
+              src="https://ghchart.rshah.org/jzxx26"
+              alt="jzxx26 GitHub contribution graph"
               className="w-full"
               style={{ filter: "invert(1) hue-rotate(180deg)" }}
             />
             <p className="mt-2 text-center text-xs text-white/30">
-              Coding since 2017 · github.com/jzjason20
+              Coding since 2017 · github.com/jzxx26
             </p>
           </div>
         </div>

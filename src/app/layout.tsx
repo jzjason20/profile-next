@@ -54,7 +54,7 @@ export default function RootLayout({
     url: "https://jzxx.dev",
     jobTitle: "Creative Developer",
     sameAs: [
-      "https://github.com/jzjason20",
+      "https://github.com/jzxx26",
       "https://www.instagram.com/jazjason20/",
     ],
   };
